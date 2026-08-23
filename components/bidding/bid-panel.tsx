@@ -127,6 +127,40 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
 
       const txnId = json.transaction_id;
 
+      // Verification helper that confirms transaction and updates UI
+      let isVerified = false;
+      const verifyAndRefresh = async () => {
+        if (isVerified) return;
+        try {
+          const verifyRes = await fetch("/api/bids/verify-transaction", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ transaction_id: txnId }),
+          });
+          const verifyJson = await verifyRes.json();
+          if (verifyRes.ok && verifyJson.success) {
+            isVerified = true;
+            setHandle("");
+            const frameEl = document.getElementById("paddle-bid-frame");
+            if (frameEl) frameEl.innerHTML = "";
+            onBidSuccess?.();
+          }
+        } catch (verifyErr) {
+          console.error("Verification error:", verifyErr);
+        }
+      };
+
+      // Start fail-safe poller (checks every 2.5s for up to 60s while user is in checkout)
+      let pollCount = 0;
+      const poller = setInterval(async () => {
+        pollCount++;
+        if (isVerified || pollCount > 24) {
+          clearInterval(poller);
+          return;
+        }
+        await verifyAndRefresh();
+      }, 2500);
+
       if (window.Paddle) {
         window.Paddle.Checkout.open({
           transactionId: txnId,
@@ -135,22 +169,19 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
           frameInitialHeight: 450,
           frameStyle: "width: 100%; min-width: 320px; background-color: transparent; border: none;",
           eventCallback: async (event: any) => {
-            if (event.name === "checkout.completed" || event.name === "checkout.payment.completed") {
-              setHandle("");
-              const frameEl = document.getElementById("paddle-bid-frame");
-              if (frameEl) frameEl.innerHTML = "";
+            const eventName = String(event?.name || event?.event || event?.action || "");
+            const eventStatus = String(event?.data?.status || event?.status || "");
 
-              try {
-                await fetch("/api/bids/verify-transaction", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ transaction_id: txnId }),
-                });
-              } catch (verifyErr) {
-                console.error("Verification background call error:", verifyErr);
-              } finally {
-                onBidSuccess?.();
-              }
+            if (
+              eventName.includes("completed") ||
+              eventName.includes("payment") ||
+              eventName.includes("closed") ||
+              eventStatus === "completed" ||
+              eventStatus === "paid" ||
+              eventStatus === "billed"
+            ) {
+              clearInterval(poller);
+              await verifyAndRefresh();
             }
           },
         });
