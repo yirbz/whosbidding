@@ -23,8 +23,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const paddleEnv = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT || "sandbox";
   const paddleToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "";
+  const isClientTokenLive = paddleToken.startsWith("live_");
+  const paddleEnv = isClientTokenLive
+    ? "production"
+    : paddleToken.startsWith("test_")
+    ? "sandbox"
+    : process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT || "sandbox";
 
   return (
     <html lang="en" suppressHydrationWarning>

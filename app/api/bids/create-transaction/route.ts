@@ -24,7 +24,12 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("[BID_CREATE_ERROR] Failed to process bid transaction:", err);
     return NextResponse.json(
-      { error: "SERVER_ERROR", message: "Failed to process bid transaction" },
+      {
+        error: "SERVER_ERROR",
+        message: "Failed to process bid transaction",
+        details: err?.message || String(err),
+        name: err?.name,
+      },
       { status: 500 }
     );
   }

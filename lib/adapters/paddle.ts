@@ -2,9 +2,14 @@ import { Environment, Paddle } from "@paddle/paddle-node-sdk";
 
 export function getPaddleClient() {
   const apiKey = process.env.PADDLE_API_KEY || "test_paddle_key";
-  const envSetting = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "production"
-    ? Environment.production
-    : Environment.sandbox;
+
+  // Auto-detect environment to avoid 401 mismatch if env variable does not match API key
+  const isSandbox =
+    apiKey.startsWith("pdl_sdbx_") ||
+    apiKey.startsWith("test_") ||
+    (process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT !== "production" && !apiKey.startsWith("pdl_live_"));
+
+  const envSetting = isSandbox ? Environment.sandbox : Environment.production;
 
   return new Paddle(apiKey, {
     environment: envSetting,
