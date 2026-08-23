@@ -36,6 +36,7 @@
   "homepage": "https://github.com/yirbz/whosbidding#readme",
   "dependencies": {
     "@paddle/paddle-node-sdk": "^3.10.0",
+    "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
