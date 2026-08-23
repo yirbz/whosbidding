@@ -11,8 +11,32 @@ export function StartupLogo({ handle, websiteUrl }: StartupLogoProps) {
   const [imgFailed, setImgFailed] = useState(false);
 
   const cleanHandle = handle.trim().toLowerCase();
+  const isTwitter = cleanHandle.startsWith("@");
 
-  // Custom high-contrast rounded-square SVG logos (guaranteed 100% visible)
+  // Handle @handle X.com entries (renders official X logo)
+  if (isTwitter) {
+    const username = cleanHandle.slice(1);
+    const xFaviconUrl = `https://unavatar.io/twitter/${encodeURIComponent(username)}`;
+
+    return (
+      <div className="min-w-[64px] min-h-[64px] w-16 h-16 md:w-[72px] md:h-[72px] rounded-[16px] bg-[#000000] border-2 border-[#202020] flex items-center justify-center overflow-hidden flex-shrink-0 shadow-md p-2">
+        {!imgFailed ? (
+          <img
+            src={xFaviconUrl}
+            alt={`@${username} X profile logo`}
+            className="w-11 h-11 md:w-13 md:h-13 object-contain rounded-full"
+            onError={() => setImgFailed(true)}
+          />
+        ) : (
+          <svg className="w-8 h-8 md:w-9 md:h-9 fill-[#ffffff]" viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        )}
+      </div>
+    );
+  }
+
+  // Custom high-contrast rounded-square SVG logos for seed/featured startups
   if (cleanHandle === "see.io" || cleanHandle.includes("see.io")) {
     return (
       <div className="min-w-[64px] min-h-[64px] w-16 h-16 md:w-[72px] md:h-[72px] rounded-[16px] bg-[#202020] border-2 border-[#333333] flex items-center justify-center shadow-md flex-shrink-0">
