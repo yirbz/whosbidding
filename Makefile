@@ -39,14 +39,14 @@ docker-logs: ## Tail whosbidding docker logs
 	@echo "\033[1;34m[whosbidding logs]\033[0m"
 	docker compose logs -f
 
-db-up: ## Start local DB infrastructure (PostgreSQL, Realtime, Auth, Studio)
-	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Realtime, Auth, Studio)...\033[0m"
-	docker compose up -d db realtime auth studio
+db-up: ## Start local DB infrastructure (PostgreSQL, Redis, Realtime, Auth, Studio)
+	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Redis, Realtime, Auth, Studio)...\033[0m"
+	docker compose up -d db redis realtime auth studio
 	@echo "\033[1;32m✔ DB infrastructure is up.\033[0m"
 
 db-down: ## Stop local DB infrastructure
 	@echo "\033[1;34m▶ Stopping DB infrastructure...\033[0m"
-	docker compose stop db realtime auth studio
+	docker compose stop db redis realtime auth studio
 	@echo "\033[1;32m✔ DB infrastructure stopped.\033[0m"
 
 db-push: ## Apply database migrations via Supabase CLI

@@ -13,6 +13,7 @@ services:
       SUPABASE_INTERNAL_URL: ${SUPABASE_INTERNAL_URL:-http://db:5432}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.placeholder-anon-key}
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY0MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.placeholder-service-key}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       PADDLE_API_KEY: ${PADDLE_API_KEY:-pdl_sandbox_test}
       PADDLE_WEBHOOK_SECRET: ${PADDLE_WEBHOOK_SECRET:-pdl_ntfset_test}
       NEXT_PUBLIC_PADDLE_CLIENT_TOKEN: ${NEXT_PUBLIC_PADDLE_CLIENT_TOKEN:-test_client_token}
@@ -21,6 +22,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # --- Redis Cache Service ---
+  redis:
+    image: redis:alpine
+    container_name: whosbidding-redis
+    ports:
+      - "${REDIS_PORT:-63799}:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   # --- Self-Hosted Supabase PostgreSQL Database ---
   db:

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPaddleClient } from "@/lib/adapters/paddle";
 import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
+import { invalidateLeaderboardCache } from "@/lib/adapters/redis";
 
 export async function POST(req: Request) {
   try {
@@ -103,6 +104,9 @@ export async function POST(req: Request) {
         new_leader_bid: targetBid,
       },
     });
+
+    // Invalidate Redis cache immediately
+    await invalidateLeaderboardCache();
 
     return NextResponse.json({
       success: true,

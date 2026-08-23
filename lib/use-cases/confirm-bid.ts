@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
+import { invalidateLeaderboardCache } from "@/lib/adapters/redis";
 
 export function verifyPaddleWebhookSignature(
   rawBody: string,
@@ -132,6 +133,9 @@ export async function confirmBidWebhookUseCase(eventPayload: any) {
         new_leader_bid: targetBid,
       },
     });
+
+    // Invalidate Redis cache immediately
+    await invalidateLeaderboardCache();
 
     console.log("Atomic bid placement confirmed:", rpcResult);
     return { success: true, result: rpcResult };
