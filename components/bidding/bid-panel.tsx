@@ -98,8 +98,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
 
     setIsSubmitting(true);
 
-    console.log("%c[WhosBidding] 🚀 Submitting bid:", "color: #ff682c; font-weight: bold;", { handle, targetBid });
-    toast.loading("Initiating bid with Paddle...", { id: "bid-init" });
+    console.log("[BID_INITIATE] Submitting bid:", { handle, targetBid });
 
     try {
       const trimmed = handle.trim();

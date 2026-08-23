@@ -8,10 +8,10 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { transaction_id } = body;
 
-    console.log(`\n🔍 [VERIFY TRANSACTION] Checking transaction_id="${transaction_id}"`);
+    console.log(`[BID_VERIFY] Checking transaction_id="${transaction_id}"`);
 
     if (!transaction_id || typeof transaction_id !== "string") {
-      console.warn("⚠️ [VERIFY TRANSACTION] Missing transaction_id in request");
+      console.warn("[BID_VERIFY] Missing transaction_id in request body");
       return NextResponse.json(
         { error: "INVALID_REQUEST", message: "transaction_id is required" },
         { status: 400 }
@@ -25,9 +25,9 @@ export async function POST(req: Request) {
     try {
       const paddle = getPaddleClient();
       txn = await paddle.transactions.get(transaction_id);
-      console.log(`📡 [PADDLE API] Transaction status="${txn?.status || 'unknown'}"`);
+      console.log(`[PADDLE_API] Transaction status="${txn?.status || 'unknown'}"`);
     } catch (paddleErr: any) {
-      console.warn("⚠️ [PADDLE API WARNING] Transaction lookup:", paddleErr?.message || paddleErr);
+      console.warn("[PADDLE_API_WARN] Transaction lookup warning:", paddleErr?.message || paddleErr);
     }
 
     // 2. Check if transaction is completed / billed / paid
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       : true; // fallback if client completed checkout
 
     if (!isPaid) {
-      console.warn(`❌ [VERIFY FAILED] Payment not completed (status: ${txn?.status})`);
+      console.warn(`[BID_VERIFY_FAILED] Payment not completed (status: ${txn?.status})`);
       return NextResponse.json(
         { error: "PAYMENT_NOT_COMPLETED", message: `Transaction status is ${txn?.status || "unknown"}` },
         { status: 400 }
@@ -67,10 +67,10 @@ export async function POST(req: Request) {
       targetBid = parseFloat(txn.details.totals.total) / 100;
     }
 
-    console.log(`📝 [VERIFY RESOLVED] handle="${handle}", target_bid=$${targetBid}, url="${websiteUrl || 'none'}"`);
+    console.log(`[BID_VERIFY_RESOLVED] handle="${handle}", target_bid=$${targetBid}, url="${websiteUrl || 'none'}"`);
 
     if (!handle || isNaN(targetBid) || targetBid < 1.00) {
-      console.error(`❌ [VERIFY ERROR] Invalid handle or bid amount for txn "${transaction_id}"`);
+      console.error(`[BID_VERIFY_ERROR] Invalid handle or bid amount for txn "${transaction_id}"`);
       return NextResponse.json(
         { error: "INVALID_TRANSACTION", message: "Could not resolve handle or bid amount" },
         { status: 400 }
@@ -86,14 +86,14 @@ export async function POST(req: Request) {
     });
 
     if (rpcErr) {
-      console.error("❌ [confirm_bid_atomic RPC ERROR]:", rpcErr);
+      console.error("[BID_VERIFY_RPC_ERROR] confirm_bid_atomic failed:", rpcErr);
       return NextResponse.json(
         { error: "RPC_ERROR", message: rpcErr.message },
         { status: 500 }
       );
     }
 
-    console.log(`🏆 [DATABASE UPDATED] confirm_bid_atomic success:`, rpcResult);
+    console.log(`[BID_VERIFY_SUCCESS] Database updated:`, rpcResult);
 
     // 5. Broadcast real-time activity and outbid events (non-blocking)
     try {
@@ -116,12 +116,12 @@ export async function POST(req: Request) {
         },
       });
     } catch (realtimeErr) {
-      console.warn("Realtime broadcast warning (non-blocking):", realtimeErr);
+      console.warn("[REALTIME_WARN] Broadcast notification skipped:", realtimeErr);
     }
 
     // Invalidate Redis cache immediately
     await invalidateLeaderboardCache();
-    console.log(`⚡ [REDIS CACHE INVALIDATED] Leaderboard cache cleared for fresh read.`);
+    console.log(`[REDIS_CACHE] Leaderboard cache invalidated.`);
 
     return NextResponse.json({
       success: true,
@@ -129,7 +129,7 @@ export async function POST(req: Request) {
       data: rpcResult,
     });
   } catch (err: any) {
-    console.error("❌ [VERIFY TRANSACTION UNEXPECTED ERROR]:", err);
+    console.error("[BID_VERIFY_UNEXPECTED_ERROR]:", err);
     return NextResponse.json(
       { error: "SERVER_ERROR", message: "Failed to verify transaction" },
       { status: 500 }

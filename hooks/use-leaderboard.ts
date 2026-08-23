@@ -20,10 +20,10 @@ export function useLeaderboard(limit = 50, offset = 0) {
         const json = await res.json();
         const data = json.data || [];
         setEntries(data);
-        console.log(`%c[WhosBidding] 📊 Loaded ${data.length} leaderboard startups (Leader: $${json.meta?.leader_bid || 0})`, "color: #ff682c;");
+        console.log(`[LEADERBOARD] Loaded ${data.length} entries (Leader bid: $${json.meta?.leader_bid || 0})`);
       }
     } catch (err) {
-      console.error("[WhosBidding] ❌ Failed to fetch leaderboard:", err);
+      console.error("[LEADERBOARD_ERROR] Failed to fetch leaderboard:", err);
     } finally {
       setIsLoading(false);
       isFetchingRef.current = false;
