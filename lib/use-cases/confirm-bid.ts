@@ -58,13 +58,15 @@ export async function confirmBidWebhookUseCase(payload: any) {
     return { success: false, message: "Invalid webhook payload structure" };
   }
 
-  // 1. Idempotency Check
-  const existingBid = await db.query(
-    "SELECT id, status FROM bids WHERE idempotency_key = $1 OR (paddle_transaction_id = $2 AND status = 'confirmed')",
-    [event_id, data.id]
-  );
+  const supabase = db.getSupabase();
 
-  if (existingBid.rows && existingBid.rows.length > 0 && existingBid.rows[0].status === "confirmed") {
+  // 1. Idempotency Check
+  const { data: existingBids } = await supabase
+    .from("bids")
+    .select("id, status")
+    .or(`idempotency_key.eq.${event_id},and(paddle_transaction_id.eq.${data.id},status.eq.confirmed)`);
+
+  if (existingBids && existingBids.length > 0) {
     console.log(`Webhook event ${event_id} already processed. Skipping.`);
     return { success: true, deduplicated: true };
   }
@@ -99,7 +101,7 @@ export async function confirmBidWebhookUseCase(payload: any) {
       return { success: false, message: "Missing handle or valid target_bid parameter" };
     }
 
-    // Execute atomic bid confirmation stored procedure directly in PostgreSQL
+    // Execute atomic bid confirmation stored procedure via Cloud Supabase RPC
     const rpcResult = await db.confirmBidAtomic(handle, websiteUrl, targetBid, data.id);
 
     // Invalidate Redis cache immediately
@@ -120,10 +122,10 @@ export async function confirmBidWebhookUseCase(payload: any) {
 
   // 3. Handle transaction.canceled
   if (event_type === "transaction.canceled") {
-    await db.query(
-      "UPDATE bids SET status = 'failed' WHERE paddle_transaction_id = $1",
-      [data.id]
-    );
+    await supabase
+      .from("bids")
+      .update({ status: "failed" })
+      .eq("paddle_transaction_id", data.id);
 
     return { success: true, status: "canceled" };
   }
