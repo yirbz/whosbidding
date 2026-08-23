@@ -41,7 +41,7 @@ export default function HomePage() {
             <span className="font-semibold text-[#202020]">{activeCount} online</span>
             <span>•</span>
             <span suppressHydrationWarning>
-              {totalVisitors.toLocaleString("en-US")} visitors since launch
+              {totalVisitors.toLocaleString("en-US")} {totalVisitors === 1 ? "visitor" : "visitors"} since launch
             </span>
           </div>
         </div>

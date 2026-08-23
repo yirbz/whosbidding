@@ -13,24 +13,15 @@ export function useVisitorStats() {
 
     async function recordAndFetchVisit() {
       try {
-        const hasVisited = typeof window !== "undefined" && sessionStorage.getItem("whosbidding_visited");
-
-        let res: Response;
-        if (!hasVisited) {
-          // Record visit for new session
-          res = await fetch("/api/analytics/visit", { method: "POST" });
-          if (typeof window !== "undefined") {
-            sessionStorage.setItem("whosbidding_visited", "true");
-          }
-        } else {
-          // Get current count
-          res = await fetch("/api/analytics/visit", { method: "GET" });
-        }
+        const res = await fetch("/api/analytics/visit", {
+          method: "POST",
+          cache: "no-store",
+        });
 
         if (res.ok) {
           const json = await res.json();
           if (isMounted && json.total_visitors !== undefined) {
-            setTotalVisitors(json.total_visitors);
+            setTotalVisitors(Number(json.total_visitors));
           }
         }
       } catch (err) {
