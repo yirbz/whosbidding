@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getPaddleClient } from "@/lib/adapters/paddle";
 import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
 import { invalidateLeaderboardCache } from "@/lib/adapters/redis";
+import { sseBroadcaster } from "@/lib/adapters/sse-broadcaster";
+import { getLeaderboardData } from "@/lib/use-cases/get-leaderboard";
 
 export async function POST(req: Request) {
   try {
@@ -98,6 +100,15 @@ export async function POST(req: Request) {
     // 5. Invalidate Redis cache immediately
     await invalidateLeaderboardCache();
     console.log(`[REDIS_CACHE] Leaderboard cache invalidated.`);
+
+    // 6. Push real-time update to all connected SSE clients
+    try {
+      const fresh = await getLeaderboardData(50, 0);
+      sseBroadcaster.broadcast("leaderboard_update", fresh.data);
+      console.log(`[SSE_BROADCAST] Pushed live update to ${sseBroadcaster.clientCount} clients.`);
+    } catch (sseErr) {
+      console.warn("[SSE_BROADCAST_WARN] Broadcast skipped:", sseErr);
+    }
 
     return NextResponse.json({
       success: true,

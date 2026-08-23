@@ -1,6 +1,8 @@
 import crypto from "crypto";
 import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
 import { invalidateLeaderboardCache } from "@/lib/adapters/redis";
+import { sseBroadcaster } from "@/lib/adapters/sse-broadcaster";
+import { getLeaderboardData } from "@/lib/use-cases/get-leaderboard";
 
 export function verifyPaddleWebhookSignature(
   rawBody: string,
@@ -116,6 +118,15 @@ export async function confirmBidWebhookUseCase(eventPayload: any) {
 
     // Invalidate Redis cache immediately
     await invalidateLeaderboardCache();
+
+    // Push real-time update to all connected SSE clients
+    try {
+      const fresh = await getLeaderboardData(50, 0);
+      sseBroadcaster.broadcast("leaderboard_update", fresh.data);
+      console.log(`[SSE_BROADCAST] Pushed webhook update to ${sseBroadcaster.clientCount} clients.`);
+    } catch (sseErr) {
+      console.warn("[SSE_BROADCAST_WARN] Broadcast skipped:", sseErr);
+    }
 
     console.log("[CONFIRM_BID_SUCCESS] Atomic bid placement confirmed:", rpcResult);
     return { success: true, result: rpcResult };

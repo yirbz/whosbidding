@@ -19,7 +19,7 @@ export function useLeaderboard(limit = 50, offset = 0) {
         const json = await res.json();
         const data = json.data || [];
         setEntries(data);
-        console.log(`[LEADERBOARD] Loaded ${data.length} entries (Leader bid: $${json.meta?.leader_bid || 0})`);
+        console.log(`[LEADERBOARD] Fetched ${data.length} entries (Leader bid: $${json.meta?.leader_bid || 0})`);
       }
     } catch (err) {
       console.error("[LEADERBOARD_ERROR] Failed to fetch leaderboard:", err);
@@ -30,17 +30,57 @@ export function useLeaderboard(limit = 50, offset = 0) {
   }, [limit, offset]);
 
   useEffect(() => {
+    // 1. Initial HTTP fetch fallback
     fetchLeaderboard();
 
-    // High-performance polling fallback every 3 seconds (cached in Redis server-side)
-    const interval = setInterval(() => {
-      if (typeof document !== "undefined" && !document.hidden) {
-        fetchLeaderboard();
-      }
-    }, 3000);
+    // 2. Connect to real-time Server-Sent Events (SSE) stream
+    let eventSource: EventSource | null = null;
+    try {
+      eventSource = new EventSource("/api/leaderboard/stream");
+
+      eventSource.addEventListener("leaderboard_init", (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (Array.isArray(data)) {
+            setEntries(data);
+            setIsLoading(false);
+          }
+        } catch {
+          // ignore parsing error
+        }
+      });
+
+      eventSource.addEventListener("leaderboard_update", (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (Array.isArray(data)) {
+            console.log(`[SSE] Real-time leaderboard update received (${data.length} entries)`);
+            setEntries(data);
+            setIsLoading(false);
+          }
+        } catch {
+          // ignore parsing error
+        }
+      });
+
+      eventSource.onerror = () => {
+        // EventSource will automatically retry in background
+      };
+    } catch {
+      // Non-blocking fallback if browser disables EventSource
+    }
+
+    // 3. Tab Focus Revalidation
+    const handleFocus = () => {
+      fetchLeaderboard();
+    };
+    window.addEventListener("focus", handleFocus);
 
     return () => {
-      clearInterval(interval);
+      window.removeEventListener("focus", handleFocus);
+      if (eventSource) {
+        eventSource.close();
+      }
     };
   }, [fetchLeaderboard]);
 
