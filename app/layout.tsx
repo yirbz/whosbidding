@@ -8,6 +8,13 @@ import { Header } from "@/components/ui/header";
 export const metadata: Metadata = {
   title: "WhosBidding",
   description: "Bid to get your startup to #1 on the leaderboard. Live low-latency bidding.",
+  icons: {
+    icon: [
+      { url: "/whosbidding_favicon_v3.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/whosbidding_favicon_v3.svg",
+    apple: "/whosbidding_favicon_v3.svg",
+  },
 };
 
 export default function RootLayout({
