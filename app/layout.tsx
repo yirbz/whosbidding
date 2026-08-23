@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 import { Header } from "@/components/ui/header";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "WhosBidding",
@@ -26,25 +27,43 @@ export default function RootLayout({
   const paddleToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "";
 
   return (
-    <html lang="en">
-      <body className="antialiased min-h-screen bg-[#ffffff] text-[#202020] font-inter">
-        <Script
-          src="https://cdn.paddle.com/paddle/v2/paddle.js"
-          strategy="beforeInteractive"
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const stored = localStorage.getItem('whosbidding_theme');
+                if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
         />
-        {paddleToken && (
-          <Script id="paddle-init" strategy="afterInteractive">
-            {`
-              if (window.Paddle) {
-                Paddle.Environment.set("${paddleEnv}");
-                Paddle.Initialize({ token: "${paddleToken}" });
-              }
-            `}
-          </Script>
-        )}
-        <Header />
-        {children}
-        <Toaster position="top-right" />
+      </head>
+      <body className="antialiased min-h-screen bg-[#ffffff] dark:bg-[#0d0d0f] text-[#202020] dark:text-[#f4f4f5] font-inter">
+        <ThemeProvider>
+          <Script
+            src="https://cdn.paddle.com/paddle/v2/paddle.js"
+            strategy="beforeInteractive"
+          />
+          {paddleToken && (
+            <Script id="paddle-init" strategy="afterInteractive">
+              {`
+                if (window.Paddle) {
+                  Paddle.Environment.set("${paddleEnv}");
+                  Paddle.Initialize({ token: "${paddleToken}" });
+                }
+              `}
+            </Script>
+          )}
+          <Header />
+          {children}
+          <Toaster position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

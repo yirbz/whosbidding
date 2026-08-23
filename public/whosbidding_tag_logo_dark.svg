@@ -1,0 +1,7 @@
+<svg viewBox="60 40 560 130" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>whosbidding logo (dark mode)</title>
+  <path d="M95 55 L150 55 L200 107 L150 160 L95 160 Q78 160 78 143 L78 72 Q78 55 95 55 Z" fill="#ffffff" />
+  <circle cx="110" cy="107" r="14" fill="#ff682c" />
+  <text x="210" y="122" font-family="'Space Grotesk','Inter Tight','Inter',sans-serif" font-size="50" font-weight="600" letter-spacing="-1.5" fill="#ffffff">whosbidding</text>
+  <line x1="210" y1="142" x2="520" y2="142" stroke="#ff682c" stroke-width="4" stroke-linecap="round" />
+</svg>

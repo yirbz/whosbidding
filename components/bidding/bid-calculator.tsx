@@ -33,7 +33,7 @@ export function BidCalculator({ handle, onHandleChange }: BidCalculatorProps) {
   return (
     <div className="relative flex-1 w-full">
       {/* Left Icon (Favicon or Globe or X Logo) */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center pointer-events-none text-[#202020]">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center pointer-events-none text-[#202020] dark:text-[#f4f4f5]">
         {isTwitter ? (
           <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -48,7 +48,7 @@ export function BidCalculator({ handle, onHandleChange }: BidCalculatorProps) {
             }}
           />
         ) : (
-          <svg className="w-5 h-5 stroke-current fill-none text-[#828282]" viewBox="0 0 24 24" strokeWidth="1.5">
+          <svg className="w-5 h-5 stroke-current fill-none text-[#828282] dark:text-[#71717a]" viewBox="0 0 24 24" strokeWidth="1.5">
             <circle cx="12" cy="12" r="10" />
             <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z" />
           </svg>
@@ -61,7 +61,7 @@ export function BidCalculator({ handle, onHandleChange }: BidCalculatorProps) {
         value={handle}
         onChange={(e) => onHandleChange(e.target.value)}
         placeholder="Your product URL or @handle"
-        className="w-full h-[52px] pl-14 pr-4 bg-[#ffffff] text-[#202020] border border-[#202020] text-[16px] font-inter rounded-full focus:outline-none focus:ring-2 focus:ring-[#202020] transition-all placeholder:text-[#828282]"
+        className="w-full h-[52px] pl-14 pr-4 bg-[#ffffff] dark:bg-[#18181b] text-[#202020] dark:text-[#f4f4f5] border border-[#202020] dark:border-[#3f3f46] text-[16px] font-inter rounded-full focus:outline-none focus:ring-2 focus:ring-[#202020] dark:focus:ring-[#f4f4f5] transition-all placeholder:text-[#828282] dark:placeholder:text-[#71717a]"
       />
     </div>
   );

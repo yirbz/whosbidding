@@ -63,8 +63,8 @@ export function StartupLogo({ handle, websiteUrl }: StartupLogoProps) {
 
   return (
     <div
-      className="min-w-[64px] min-h-[64px] w-16 h-16 md:w-[72px] md:h-[72px] rounded-[16px] border-2 border-[#e8e8e8] flex items-center justify-center overflow-hidden flex-shrink-0 shadow-md p-2"
-      style={{ backgroundColor: faviconUrl ? "#ffffff" : getBrandBg(cleanHandle) }}
+      className="min-w-[64px] min-h-[64px] w-16 h-16 md:w-[72px] md:h-[72px] rounded-[16px] border-2 border-[#e8e8e8] dark:border-[#27272a] bg-[#ffffff] dark:bg-[#18181b] flex items-center justify-center overflow-hidden flex-shrink-0 shadow-md p-2"
+      style={{ backgroundColor: faviconUrl ? undefined : getBrandBg(cleanHandle) }}
     >
       {faviconUrl ? (
         <img

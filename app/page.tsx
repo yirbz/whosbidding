@@ -29,16 +29,16 @@ export default function HomePage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#ffffff] text-[#202020] flex flex-col font-inter">
+    <div className="min-h-screen bg-[#ffffff] dark:bg-[#0d0d0f] text-[#202020] dark:text-[#f4f4f5] flex flex-col font-inter transition-colors">
       <main className="flex-1 max-w-[960px] w-full mx-auto px-4 md:px-6 py-8 md:py-12 space-y-12">
         {/* Top Centered Status Capsule Pill with Real Active Viewer & Visitor Count */}
         <div className="flex justify-center">
           <div
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-[#efefef] border border-[#e8e8e8] rounded-full text-[13px] font-inter text-[#4d4d4d]"
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-[#efefef] dark:bg-[#18181b] border border-[#e8e8e8] dark:border-[#27272a] rounded-full text-[13px] font-inter text-[#4d4d4d] dark:text-[#a1a1aa]"
             suppressHydrationWarning
           >
             <span className="w-2.5 h-2.5 rounded-full bg-[#ff682c] animate-pulse" />
-            <span className="font-semibold text-[#202020]">{activeCount} online</span>
+            <span className="font-semibold text-[#202020] dark:text-[#f4f4f5]">{activeCount} online</span>
             <span>•</span>
             <span suppressHydrationWarning>
               {totalVisitors.toLocaleString("en-US")} {totalVisitors === 1 ? "visitor" : "visitors"} since launch
@@ -53,11 +53,11 @@ export default function HomePage() {
 
         {/* Leaderboard Card Stack */}
         <section id="leaderboard-section" className="w-full space-y-6 pt-4">
-          <div className="flex justify-between items-center pb-2 border-b border-[#e8e8e8]">
-            <h2 className="text-[24px] md:text-[28px] font-polysans font-normal text-[#202020] leading-[1.0] tracking-[-0.64px]">
+          <div className="flex justify-between items-center pb-2 border-b border-[#e8e8e8] dark:border-[#27272a]">
+            <h2 className="text-[24px] md:text-[28px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-0.64px]">
               Top 50 Leaderboard
             </h2>
-            <span className="text-[13px] font-inter text-[#828282]">
+            <span className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
               Showing top 50 bidding startups
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#e8e8e8] py-8 text-center text-[13px] font-inter text-[#828282] bg-[#ffffff]">
+      <footer className="border-t border-[#e8e8e8] dark:border-[#27272a] py-8 text-center text-[13px] font-inter text-[#828282] dark:text-[#71717a] bg-[#ffffff] dark:bg-[#0d0d0f] transition-colors">
         <div className="max-w-[960px] mx-auto px-6">
           WhosBidding • Startup Leaderboard Platform
         </div>

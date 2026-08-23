@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Colors */
   --color-graphite: #202020;
@@ -57,12 +59,18 @@
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+.dark {
+  --background: #0d0d0f;
+  --foreground: #f4f4f5;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6, .font-polysans {
@@ -89,4 +97,3 @@ h1, h2, h3, h4, h5, h6, .font-polysans {
     animation: none;
   }
 }
-

@@ -198,7 +198,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
     <div className="w-full max-w-4xl mx-auto text-center space-y-8 select-none" suppressHydrationWarning>
       {/* Sleek Editorial Headline Stepper */}
       <div className="space-y-4">
-        <h1 className="text-[40px] sm:text-[56px] md:text-[66px] font-polysans font-normal text-[#202020] leading-[0.91] tracking-[-1.32px] flex items-center justify-center flex-wrap gap-3">
+        <h1 className="text-[40px] sm:text-[56px] md:text-[66px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[0.91] tracking-[-1.32px] flex items-center justify-center flex-wrap gap-3">
           <span>Claim #1 for</span>
           <button
             onMouseDown={() => startHold("dec")}
@@ -212,7 +212,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
             onTouchCancel={stopHold}
             disabled={targetBid <= minTarget}
             aria-label="Decrease bid (hold to accelerate)"
-            className="w-9 h-9 rounded-full bg-[#efefef] text-[#202020] text-[20px] font-bold flex items-center justify-center hover:bg-[#202020] hover:text-[#ffffff] disabled:opacity-30 disabled:pointer-events-none transition-all active:scale-95"
+            className="w-9 h-9 rounded-full bg-[#efefef] dark:bg-[#18181b] border border-[#e8e8e8] dark:border-[#27272a] text-[#202020] dark:text-[#f4f4f5] text-[20px] font-bold flex items-center justify-center hover:bg-[#202020] dark:hover:bg-[#f4f4f5] hover:text-[#ffffff] dark:hover:text-[#0d0d0f] disabled:opacity-30 disabled:pointer-events-none transition-all active:scale-95"
             suppressHydrationWarning
           >
             -
@@ -232,14 +232,14 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
             onTouchCancel={stopHold}
             disabled={targetBid >= MAX_BID_AMOUNT}
             aria-label="Increase bid (hold to accelerate)"
-            className="w-9 h-9 rounded-full bg-[#efefef] text-[#202020] text-[20px] font-bold flex items-center justify-center hover:bg-[#202020] hover:text-[#ffffff] disabled:opacity-30 disabled:pointer-events-none transition-all active:scale-95"
+            className="w-9 h-9 rounded-full bg-[#efefef] dark:bg-[#18181b] border border-[#e8e8e8] dark:border-[#27272a] text-[#202020] dark:text-[#f4f4f5] text-[20px] font-bold flex items-center justify-center hover:bg-[#202020] dark:hover:bg-[#f4f4f5] hover:text-[#ffffff] dark:hover:text-[#0d0d0f] disabled:opacity-30 disabled:pointer-events-none transition-all active:scale-95"
             suppressHydrationWarning
           >
             +
           </button>
         </h1>
 
-        <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] max-w-2xl mx-auto leading-[1.38]">
+        <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl mx-auto leading-[1.38]">
           The leaderboard for bidding platforms. <span className="text-[#ff682c] font-semibold">Outbid</span> other bidding sites to prove your bidding platform bids higher than theirs. Press & hold + / - to bid higher faster.
         </p>
       </div>
@@ -258,7 +258,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
           </Button>
         </div>
 
-        <p className="text-[13px] font-inter text-[#828282]">
+        <p className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
           Already on the list? Enter the same URL or @handle and up your bid.
         </p>
       </div>

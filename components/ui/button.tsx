@@ -29,11 +29,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center font-polysans font-normal tracking-[-0.02em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#202020] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
           "rounded-full",
           variant === "primary" &&
-            "bg-[#202020] text-[#ffffff] border border-[#202020] hover:bg-[#ffffff] hover:text-[#202020]",
+            "bg-[#202020] dark:bg-[#f4f4f5] text-[#ffffff] dark:text-[#0d0d0f] border border-[#202020] dark:border-[#f4f4f5] hover:bg-[#ffffff] dark:hover:bg-[#0d0d0f] hover:text-[#202020] dark:hover:text-[#f4f4f5]",
           variant === "ghost" &&
-            "bg-transparent text-[#202020] border border-[#202020] hover:bg-[#202020] hover:text-[#ffffff]",
+            "bg-transparent text-[#202020] dark:text-[#f4f4f5] border border-[#202020] dark:border-[#3f3f46] hover:bg-[#202020] dark:hover:bg-[#f4f4f5] hover:text-[#ffffff] dark:hover:text-[#0d0d0f]",
           variant === "ember" &&
-            "bg-[#ff682c] text-[#ffffff] border border-[#ff682c] hover:bg-[#ffffff] hover:text-[#ff682c]",
+            "bg-[#ff682c] text-[#ffffff] border border-[#ff682c] hover:bg-[#ffffff] dark:hover:bg-[#0d0d0f] hover:text-[#ff682c]",
           size === "default" && "h-[52px] px-[32px] py-3.5 text-[16px] leading-[1.0]",
           size === "sm" && "h-9 px-4 py-1.5 text-[14px]",
           size === "lg" && "h-[58px] px-10 py-4 text-[18px]",

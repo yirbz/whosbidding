@@ -43,8 +43,8 @@ export function LeaderboardRow({ entry }: LeaderboardRowProps) {
       transition={{ duration: 0.3, ease: "easeOut" }}
       className={`relative p-5 md:p-6 rounded-[16px] border transition-all ${
         isLeader
-          ? "bg-[#efefef] border-[#ff682c] border-2 shadow-md"
-          : "bg-[#efefef] border-[#e8e8e8] hover:border-[#202020]"
+          ? "bg-[#efefef] dark:bg-[#18181b] border-[#ff682c] border-2 shadow-md dark:shadow-orange-950/20"
+          : "bg-[#efefef] dark:bg-[#18181b] border-[#e8e8e8] dark:border-[#27272a] hover:border-[#202020] dark:hover:border-[#71717a]"
       }`}
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 md:gap-6">
@@ -61,7 +61,7 @@ export function LeaderboardRow({ entry }: LeaderboardRowProps) {
                 className={`inline-flex items-center justify-center h-6 px-2.5 rounded-full font-polysans text-[12px] font-bold ${
                   isLeader
                     ? "bg-[#ff682c] text-[#ffffff]"
-                    : "bg-[#202020] text-[#ffffff]"
+                    : "bg-[#202020] dark:bg-[#27272a] text-[#ffffff] dark:text-[#f4f4f5]"
                 }`}
               >
                 #{entry.rank}
@@ -72,12 +72,12 @@ export function LeaderboardRow({ entry }: LeaderboardRowProps) {
                   href={targetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-polysans text-[22px] md:text-[26px] text-[#202020] font-normal leading-[1.1] hover:text-[#ff682c] transition-colors truncate"
+                  className="font-polysans text-[22px] md:text-[26px] text-[#202020] dark:text-[#f4f4f5] font-normal leading-[1.1] hover:text-[#ff682c] dark:hover:text-[#ff682c] transition-colors truncate"
                 >
                   {entry.handle}
                 </a>
               ) : (
-                <h3 className="font-polysans text-[22px] md:text-[26px] text-[#202020] font-normal leading-[1.1] truncate">
+                <h3 className="font-polysans text-[22px] md:text-[26px] text-[#202020] dark:text-[#f4f4f5] font-normal leading-[1.1] truncate">
                   {entry.handle}
                 </h3>
               )}
@@ -88,23 +88,20 @@ export function LeaderboardRow({ entry }: LeaderboardRowProps) {
                 href={targetUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-inter text-[14px] text-[#4d4d4d] hover:text-[#202020] transition-colors block truncate"
+                className="font-inter text-[14px] text-[#4d4d4d] dark:text-[#a1a1aa] hover:text-[#202020] dark:hover:text-[#f4f4f5] transition-colors block truncate"
               >
                 {targetUrl}
               </a>
             )}
-
-            <div className="flex items-center gap-2 text-[12px] font-inter text-[#828282] pt-0.5">
-            </div>
           </div>
         </div>
 
         {/* Right Side: Big Total Placement Bid Display */}
         <div className="text-left sm:text-right flex-shrink-0 pt-1 sm:pt-0">
-          <span className="text-[11px] font-inter uppercase tracking-wider text-[#828282] block mb-0.5 sm:mb-1">
+          <span className="text-[11px] font-inter uppercase tracking-wider text-[#828282] dark:text-[#71717a] block mb-0.5 sm:mb-1">
             Total Placement Bid
           </span>
-          <div className="font-polysans text-[28px] md:text-[34px] text-[#202020] leading-[1.0] tracking-[-0.64px]">
+          <div className="font-polysans text-[28px] md:text-[34px] text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-0.64px]">
             {formattedBid}
           </div>
         </div>
