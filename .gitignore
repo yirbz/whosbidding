@@ -39,3 +39,5 @@ next-env.d.ts
 .branches
 .temp
 supabase/.temp
+.vercel
+.env*
