@@ -95,31 +95,7 @@ export async function POST(req: Request) {
 
     console.log(`[BID_VERIFY_SUCCESS] Database updated:`, rpcResult);
 
-    // 5. Broadcast real-time activity and outbid events (non-blocking)
-    try {
-      const channel = supabase.channel("leaderboard_live");
-      await channel.send({
-        type: "broadcast",
-        event: "new_bid_activity",
-        payload: {
-          startup_name: handle,
-          incremental_amount: targetBid,
-        },
-      });
-
-      await channel.send({
-        type: "broadcast",
-        event: "outbid",
-        payload: {
-          new_leader_name: handle,
-          new_leader_bid: targetBid,
-        },
-      });
-    } catch (realtimeErr) {
-      console.warn("[REALTIME_WARN] Broadcast notification skipped:", realtimeErr);
-    }
-
-    // Invalidate Redis cache immediately
+    // 5. Invalidate Redis cache immediately
     await invalidateLeaderboardCache();
     console.log(`[REDIS_CACHE] Leaderboard cache invalidated.`);
 

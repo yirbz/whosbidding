@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { getSupabaseBrowserClient } from "@/lib/adapters/supabase-client";
 import { LeaderboardEntry } from "@/lib/domain/types";
 
 export function useLeaderboard(limit = 50, offset = 0) {
@@ -33,35 +32,15 @@ export function useLeaderboard(limit = 50, offset = 0) {
   useEffect(() => {
     fetchLeaderboard();
 
-    // 1. Supabase Postgres Changes & Broadcast Realtime Channel
-    const supabase = getSupabaseBrowserClient();
-    const channel = supabase
-      .channel("leaderboard_live")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "startups" },
-        () => {
-          fetchLeaderboard();
-        }
-      )
-      .on("broadcast", { event: "new_bid_activity" }, () => {
-        fetchLeaderboard();
-      })
-      .on("broadcast", { event: "outbid" }, () => {
-        fetchLeaderboard();
-      })
-      .subscribe();
-
-    // 2. High-speed 4-second polling fallback
+    // High-performance polling fallback every 3 seconds (cached in Redis server-side)
     const interval = setInterval(() => {
       if (typeof document !== "undefined" && !document.hidden) {
         fetchLeaderboard();
       }
-    }, 4000);
+    }, 3000);
 
     return () => {
       clearInterval(interval);
-      supabase.removeChannel(channel);
     };
   }, [fetchLeaderboard]);
 

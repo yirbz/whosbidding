@@ -114,34 +114,10 @@ export async function confirmBidWebhookUseCase(eventPayload: any) {
       return { success: false, message: rpcErr.message };
     }
 
-    // Broadcast real-time outbid and activity events via Supabase Realtime channel (non-blocking)
-    try {
-      const channel = supabase.channel("leaderboard_live");
-      await channel.send({
-        type: "broadcast",
-        event: "new_bid_activity",
-        payload: {
-          startup_name: handle,
-          incremental_amount: targetBid,
-        },
-      });
-
-      await channel.send({
-        type: "broadcast",
-        event: "outbid",
-        payload: {
-          new_leader_name: handle,
-          new_leader_bid: targetBid,
-        },
-      });
-    } catch (realtimeErr) {
-      console.warn("Realtime broadcast warning (non-blocking):", realtimeErr);
-    }
-
     // Invalidate Redis cache immediately
     await invalidateLeaderboardCache();
 
-    console.log("Atomic bid placement confirmed:", rpcResult);
+    console.log("[CONFIRM_BID_SUCCESS] Atomic bid placement confirmed:", rpcResult);
     return { success: true, result: rpcResult };
   }
 

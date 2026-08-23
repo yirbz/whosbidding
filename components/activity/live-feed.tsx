@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { getSupabaseBrowserClient } from "@/lib/adapters/supabase-client";
 
 interface ActivityItem {
   id: string;
@@ -18,7 +17,7 @@ export function LiveBidFeed() {
   useEffect(() => {
     async function loadRecentActivity() {
       try {
-        const res = await fetch("/api/leaderboard/activity");
+        const res = await fetch("/api/leaderboard/activity", { cache: "no-store" });
         if (res.ok) {
           const json = await res.json();
           if (json.data && json.data.length > 0) {
@@ -26,7 +25,7 @@ export function LiveBidFeed() {
               id: b.id,
               startupName: b.handle,
               amount: parseFloat(b.target_bid),
-              time: new Date(b.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              time: new Date(b.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             }));
             setActivities(items);
           }
@@ -38,23 +37,14 @@ export function LiveBidFeed() {
 
     loadRecentActivity();
 
-    const supabase = getSupabaseBrowserClient();
-    const channel = supabase.channel("leaderboard_live");
-
-    channel
-      .on("broadcast", { event: "new_bid_activity" }, (payload: any) => {
-        const newActivity: ActivityItem = {
-          id: Math.random().toString(),
-          startupName: payload.payload?.startup_name || "@Challenger",
-          amount: payload.payload?.incremental_amount || 0,
-          time: "Just now",
-        };
-        setActivities((prev) => [newActivity, ...prev.slice(0, 9)]);
-      })
-      .subscribe();
+    const interval = setInterval(() => {
+      if (typeof document !== "undefined" && !document.hidden) {
+        loadRecentActivity();
+      }
+    }, 4000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, []);
 

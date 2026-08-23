@@ -1,30 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSupabaseBrowserClient } from "@/lib/adapters/supabase-client";
 
 export function useActiveUsers() {
   const [activeCount, setActiveCount] = useState<number>(1);
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    const channel = supabase.channel("online_presence");
-
-    channel
-      .on("presence", { event: "sync" }, () => {
-        const state = channel.presenceState();
-        const count = Object.keys(state).length;
-        setActiveCount(count > 0 ? count : 1);
-      })
-      .subscribe(async (status: string) => {
-        if (status === "SUBSCRIBED") {
-          await channel.track({ online_at: new Date().toISOString() });
+    async function fetchStats() {
+      try {
+        const res = await fetch("/api/analytics/visit", { cache: "no-store" });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.data?.today_visitors) {
+            setActiveCount(Math.max(1, Number(json.data.today_visitors)));
+          }
         }
-      });
+      } catch {
+        // Fallback gracefully
+      }
+    }
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   return { activeCount };

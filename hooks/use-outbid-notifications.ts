@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { getSupabaseBrowserClient } from "@/lib/adapters/supabase-client";
+import { useEffect, useRef } from "react";
 
 interface OutbidEventData {
   startup_name?: string;
@@ -14,20 +13,37 @@ interface UseOutbidNotificationsOptions {
 }
 
 export function useOutbidNotifications(options?: UseOutbidNotificationsOptions) {
+  const lastLeaderRef = useRef<{ name?: string; bid?: number }>({});
+
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    const channel = supabase.channel("outbid_notifications");
-
-    channel
-      .on("broadcast", { event: "outbid" }, (payload: any) => {
-        if (options?.onOutbid && payload.payload) {
-          options.onOutbid(payload.payload as OutbidEventData);
+    async function checkLeader() {
+      try {
+        const res = await fetch("/api/leaderboard?limit=1", { cache: "no-store" });
+        if (res.ok) {
+          const json = await res.json();
+          const leader = json.data?.[0];
+          if (leader) {
+            const leaderBid = parseFloat(leader.total_bid);
+            if (
+              lastLeaderRef.current.name &&
+              lastLeaderRef.current.name !== leader.handle &&
+              lastLeaderRef.current.bid &&
+              leaderBid > lastLeaderRef.current.bid
+            ) {
+              options?.onOutbid?.({
+                new_leader_name: leader.handle,
+                new_leader_bid: leaderBid,
+              });
+            }
+            lastLeaderRef.current = { name: leader.handle, bid: leaderBid };
+          }
         }
-      })
-      .subscribe();
+      } catch {
+        // Non-blocking
+      }
+    }
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    const interval = setInterval(checkLeader, 6000);
+    return () => clearInterval(interval);
   }, [options]);
 }
