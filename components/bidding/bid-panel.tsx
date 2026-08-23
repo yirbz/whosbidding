@@ -240,7 +240,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </h1>
 
         <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl mx-auto leading-[1.38]">
-          The leaderboard for bidding platforms. <span className="text-[#ff682c] font-semibold">Outbid</span> other bidding sites to prove your bidding platform bids higher than theirs. Press & hold + / - to bid higher faster.
+          The real-time data observatory and benchmark index for bidding platforms. <span className="text-[#ff682c] font-semibold">Outbid</span> other bidding sites to benchmark your platform in the live software index. Press & hold + / - to adjust faster.
         </p>
       </div>
 
@@ -259,7 +259,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </div>
 
         <p className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
-          Already on the list? Enter the same URL or @handle and up your bid.
+          Already in the index? Enter the same URL or @handle to update your benchmark rank.
         </p>
       </div>
 

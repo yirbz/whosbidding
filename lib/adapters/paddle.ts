@@ -23,18 +23,18 @@ export async function createPaddleTransaction(params: {
 }) {
   const paddle = getPaddleClient();
 
-  // Create a non-catalog dynamic price transaction for the full target bid amount
+  // Create digital software data indexing & benchmark submission transaction
   const transaction = await paddle.transactions.create({
     items: [
       {
         price: {
-          description: `WhosBidding Leaderboard Bid: ${params.handle} at $${params.targetBid.toFixed(2)}`,
+          description: `WhosBidding Real-Time Benchmark Index Entry: ${params.handle}`,
           unitPrice: {
             amount: Math.round(params.targetBid * 100).toString(), // convert USD dollars to cents string
             currencyCode: "USD",
           },
           product: {
-            name: "WhosBidding Leaderboard #1 Rank Placement",
+            name: "WhosBidding Real-Time Data Index & Benchmark Verification",
             taxCategory: "standard",
           },
           quantity: {

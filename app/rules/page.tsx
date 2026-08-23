@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Footer } from "@/components/ui/footer";
 
 export const metadata = {
-  title: "Platform Rules & Terms — WhosBidding",
-  description: "Official rules, rank suppression criteria, Paddle Merchant of Record terms, and legal disclaimers for WhosBidding.",
+  title: "Benchmark Rules & Index Policies — WhosBidding",
+  description: "Official rules, benchmark criteria, Paddle Merchant of Record terms, and legal policies for WhosBidding.",
 };
 
 export default function RulesPage() {
@@ -15,13 +15,13 @@ export default function RulesPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Leaderboard
+            ← Back to Observatory
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
-            Platform Rules & Policies
+            Platform Rules & Index Policies
           </h1>
           <p className="text-[16px] md:text-[18px] text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl leading-[1.4]">
-            Official guidelines governing bidding eligibility, rank suppression, payment processing, and legal policies.
+            Official guidelines governing bidding software indexing eligibility, data filtering, payment terms, and legal policies.
           </p>
         </div>
 
@@ -29,20 +29,20 @@ export default function RulesPage() {
           {/* Rule 1 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 1: Bidding Platform Qualification & Rank Suppression
+              Rule 1: Bidding Platform Qualification & Data Filtering
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is exclusively reserved for bidding platform startups, auction marketplaces, and competitive ranking tools. If an entry is submitted for a non-bidding product, standard SaaS, personal portfolio, or unrelated URL, administrators reserve the absolute right to suppress and hide the entry from the public leaderboard rank list. No refunds are issued for suppressed non-qualifying entries.
+              WhosBidding is exclusively dedicated to indexing bidding platforms, auction marketplace software, and dynamic pricing tools. If an entry is submitted for a non-bidding product, general SaaS, personal portfolio, or unrelated URL, administrators reserve the right to filter and suppress the entry from the public data index to ensure data purity. No refunds are issued for non-qualifying filtered entries.
             </p>
           </div>
 
           {/* Rule 2 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 2: Minimum Bid & Surpassing Mechanics
+              Rule 2: Minimum Benchmark Bid & Dynamic Surpassing
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              The initial starting bid is $1.00. To claim the #1 rank, a bid must equal or exceed the required target bid price ($1.00 higher than current leader or starting bid). Bidders pay 100% of the target bid amount directly per transaction.
+              The initial minimum index entry fee is $1.00. To establish the #1 rank in the benchmark index, a submission must equal or exceed the required target threshold ($1.00 higher than current leader or starting benchmark). Submissions are processed atomically per transaction.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function RulesPage() {
               Rule 3: Paddle Merchant of Record & Payment Finality
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              All transactions are securely billed and processed by <strong>Paddle.com</strong>, our Merchant of Record. All digital placement sales are final upon confirmation. Because rank placements take immediate effect on the leaderboard, standard refunds are not provided, as outlined in our{" "}
+              All digital software transactions are securely billed and processed by <strong>Paddle.com</strong>, our Merchant of Record. All sales are final once confirmed by Paddle. Because dataset recalculation and ranking execution occur instantaneously, standard refunds are not provided, as outlined in our{" "}
               <Link href="/refund" className="text-[#ff682c] underline">
                 Refund Policy
               </Link>.
@@ -62,30 +62,20 @@ export default function RulesPage() {
           {/* Rule 4 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 4: Unconsented Submissions & Non-Affiliation
+              Rule 4: Community Submissions & Non-Affiliation
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Because bids are anonymous and account-free, any public startup may be placed by any third-party bidder. Listing on WhosBidding does not imply endorsement, authorization, or affiliation with the target startup owners.
+              Because indexing submissions are anonymous and account-free, any public bidding platform may be submitted by community participants. Inclusion in the WhosBidding benchmark index does not imply endorsement, authorization, or partnership with the target platform owners.
             </p>
           </div>
 
           {/* Rule 5 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 5: Takedowns & Domain Uptime Disclaimer
+              Rule 5: Legal Compliance & Governance Links
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding bears no responsibility or liability if a listed startup’s external website is taken down, suspended, offline, or unavailable. Verified domain owners may request removal of their listing by contacting support.
-            </p>
-          </div>
-
-          {/* Rule 6 */}
-          <div className="space-y-2">
-            <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 6: Privacy, Terms & Compliance References
-            </h2>
-            <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              By using WhosBidding or participating in bidding, you agree to our full legal framework:
+              For complete details on our data protection practices, merchant terms, and refund guidelines, please consult:
             </p>
             <div className="flex flex-wrap gap-4 pt-1 text-[14px] font-medium">
               <Link href="/terms" className="text-[#ff682c] hover:underline">

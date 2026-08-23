@@ -3,7 +3,7 @@ import { Footer } from "@/components/ui/footer";
 
 export const metadata = {
   title: "Terms of Service — WhosBidding",
-  description: "Official terms and conditions for using WhosBidding, including digital placement rules, Paddle Merchant of Record terms, and liability limits.",
+  description: "Official terms of service for WhosBidding, a real-time data observatory and digital benchmark index for bidding platforms.",
 };
 
 export default function TermsPage() {
@@ -16,7 +16,7 @@ export default function TermsPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Leaderboard
+            ← Back to Observatory
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
             Terms of Service
@@ -33,17 +33,20 @@ export default function TermsPage() {
               1. Agreement to Terms
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Welcome to <strong>WhosBidding</strong> (“WhosBidding”, “we”, “our”, or “the Platform”). By accessing our website (https://whosbidding.vercel.app), submitting a bid, or using any associated services, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access the Platform or place a bid.
+              Welcome to <strong>WhosBidding</strong> (“WhosBidding”, “we”, “our”, or “the Platform”). By accessing our software website (https://whosbidding.vercel.app), utilizing our real-time data index, or submitting a digital benchmark entry, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access the Platform.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              2. Description of Digital Placement Service
+              2. Description of Digital Software Service & Benchmark Index
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding provides a real-time data observatory and competitive ranking arcade exclusively for bidding platform startups. When you complete a financial transaction, you purchase a digital, real-time rank placement on the public leaderboard corresponding to the submitted startup URL or @handle. Placements dynamically adjust based on community bidding activity and surpassing rules.
+              WhosBidding is an interactive software application and real-time data observatory designed to track, benchmark, and compare bidding platforms and auction software systems. When a user submits an entry, they purchase a <strong>digital software service</strong> encompassing real-time data indexing, live telemetry recording, and entry into our automated ranking index algorithm.
+            </p>
+            <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
+              WhosBidding is <strong>not</strong> an advertising agency, marketing network, or publisher of paid sponsored ads. The service provided is an interactive software benchmark dataset and computational ranking engine.
             </p>
           </section>
 
@@ -53,40 +56,40 @@ export default function TermsPage() {
               3. Paddle Merchant of Record & Billing Terms
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Our order process is conducted by our online Merchant of Record, <strong>Paddle.com</strong> (Paddle Payments Limited / Paddle.com Inc.). Paddle is the Merchant of Record for all our orders. Paddle manages order processing, invoicing, sales tax/VAT compliance, customer billing inquiries, and returns. When placing a bid, you agree to Paddle’s Checkout Buyer Terms and conditions.
+              Our order process is conducted by our online Merchant of Record, <strong>Paddle.com</strong> (Paddle Payments Limited / Paddle.com Inc.). Paddle is the Merchant of Record for all our orders. Paddle manages order processing, invoicing, sales tax/VAT compliance, customer billing inquiries, and returns. When submitting an index transaction, you agree to Paddle’s Checkout Buyer Terms and conditions.
             </p>
           </section>
 
           {/* Section 4 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              4. Strict Bidding Platform Scope & Rank Suppression
+              4. Platform Scope & Data Moderation Policy
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is strictly designed for bidding platforms, auction software, reverse auctions, and competitive bidding tools. If a submitted handle or URL represents a general SaaS product, e-commerce storefront, personal portfolio, or unrelated product, WhosBidding administrators reserve the unconditional right to <strong>suppress and hide</strong> the entry from the public ranking list.
+              WhosBidding is dedicated exclusively to indexing bidding platforms, auction software, and competitive market software. If a submitted handle or URL represents a general SaaS product, e-commerce storefront, personal portfolio, or unrelated non-bidding product, WhosBidding administrators reserve the right to <strong>suppress and filter</strong> the entry from the public data index to protect dataset integrity.
             </p>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Because placement slots and processing resources are instantly consumed upon transaction confirmation, suppressed entries for non-qualifying products are not eligible for a refund.
+              Because computing power, indexing pipelines, and real-time database transactions are instantly utilized upon confirmation, filtered non-qualifying entries are not eligible for refunds.
             </p>
           </section>
 
           {/* Section 5 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              5. Anonymous Submissions & Third-Party Unconsented Placements
+              5. Community Indexing & Public Domain References
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding requires no user accounts, passwords, or personal profiles. Any user may submit any publicly accessible startup website URL or social handle. Consequently, a startup may appear on the leaderboard without the prior knowledge, direct authorization, or endorsement of that startup’s management or founders. The appearance of a third-party startup on WhosBidding does not imply partnership, sponsorship, or affiliation.
+              WhosBidding requires no user account creation or password credentials. Any user may submit any publicly accessible bidding software URL or social handle for community benchmarking. The appearance of a third-party platform in the dataset does not imply official partnership, sponsorship, or corporate affiliation.
             </p>
           </section>
 
           {/* Section 6 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              6. Digital Product Finality & Non-Refundability
+              6. Digital Service Finality & Refund Policy
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              All sales of digital rank placements are final upon payment confirmation by Paddle. Because leaderboard positions and dynamic ranking benefits take effect immediately upon transaction execution, no cancellations or standard refunds are provided. For full details, please review our{" "}
+              All sales of digital data indexing entries are final upon payment confirmation by Paddle. Because dataset recalculation and ranking execution occur instantaneously, standard refunds are not provided once the digital service has been executed. For full details, please review our{" "}
               <Link href="/refund" className="text-[#ff682c] underline">
                 Refund Policy
               </Link>.
@@ -96,10 +99,10 @@ export default function TermsPage() {
           {/* Section 7 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              7. Disclaimer of Warranties & Third-Party Uptime
+              7. Disclaimer of Warranties
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              The Platform and digital placements are provided on an “AS IS” and “AS AVAILABLE” basis without warranties of any kind, whether express or implied. WhosBidding does not own, control, or monitor third-party startup websites. We accept zero responsibility if a listed startup ceases operations, undergoes domain name transfer, suffers downtime, or becomes inaccessible.
+              The software observatory and index services are provided on an “AS IS” and “AS AVAILABLE” basis without warranties of any kind, whether express or implied. WhosBidding does not control, operate, or monitor external third-party software websites.
             </p>
           </section>
 
@@ -109,24 +112,14 @@ export default function TermsPage() {
               8. Limitation of Liability
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              To the maximum extent permitted by applicable law, in no event shall WhosBidding, its operators, affiliates, or Paddle be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, goodwill, or business interruption, arising out of or in connection with your use of the Platform.
+              To the maximum extent permitted by applicable law, in no event shall WhosBidding, its operators, affiliates, or Paddle be liable for any indirect, incidental, special, consequential, or punitive damages arising out of your use of the Platform or data index.
             </p>
           </section>
 
           {/* Section 9 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              9. Takedown & Content Removal Requests
-            </h2>
-            <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              If you are the verified domain owner or authorized representative of a listed startup and wish to have your handle or logo suppressed from the public leaderboard, contact our team with proof of domain ownership. We will review and process takedown requests promptly.
-            </p>
-          </section>
-
-          {/* Section 10 */}
-          <section className="space-y-3">
-            <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              10. Contact Information
+              9. Contact Information
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
               If you have any questions or legal inquiries regarding these Terms, please contact us at:{" "}
