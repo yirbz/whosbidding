@@ -1,0 +1,107 @@
+services:
+  # --- WhosBidding Application ---
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whosbidding-app
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
+      SUPABASE_INTERNAL_URL: ${SUPABASE_INTERNAL_URL:-http://db:5432}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.placeholder-anon-key}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY0MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.placeholder-service-key}
+      PADDLE_API_KEY: ${PADDLE_API_KEY:-pdl_sandbox_test}
+      PADDLE_WEBHOOK_SECRET: ${PADDLE_WEBHOOK_SECRET:-pdl_ntfset_test}
+      NEXT_PUBLIC_PADDLE_CLIENT_TOKEN: ${NEXT_PUBLIC_PADDLE_CLIENT_TOKEN:-test_client_token}
+      NEXT_PUBLIC_PADDLE_ENVIRONMENT: ${NEXT_PUBLIC_PADDLE_ENVIRONMENT:-sandbox}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # --- Self-Hosted Supabase PostgreSQL Database ---
+  db:
+    image: supabase/postgres:15.1.1.78
+    container_name: whosbidding-db
+    ports:
+      - "${DB_PORT:-54332}:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./supabase/migrations:/docker-entrypoint-initdb.d/migrations:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # --- Supabase GoTrue Auth Service ---
+  auth:
+    image: supabase/gotrue:v2.151.0
+    container_name: whosbidding-auth
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
+      GOTRUE_API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/postgres?sslmode=disable
+      GOTRUE_SITE_URL: http://localhost:3000
+      GOTRUE_JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
+      GOTRUE_JWT_EXP: 3600
+      GOTRUE_DISABLE_SIGNUP: "false"
+    restart: unless-stopped
+
+  # --- Supabase Realtime WebSocket Engine ---
+  realtime:
+    image: supabase/realtime:v2.25.34
+    container_name: whosbidding-realtime
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 4000
+      APP_NAME: realtime
+      REALTIME_APP_NAME: realtime
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DB_NAME: postgres
+      DB_SCHEMA: _realtime
+      DB_AFTER_CONNECT_QUERY: 'SET search_path TO _realtime'
+      JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-super-secret-key-base-for-phoenix-realtime-min-64-chars-long-string}
+      DB_ENC_KEY: super-secret-db-enc-key-32-bytes
+      ERL_AFLAGS: "-proto_dist inet_tcp"
+      ENABLE_RLS: "true"
+      REPLICATION_MODE: RLS
+      REPLICATION_POLL_INTERVAL: 100
+      SECURE_CHANNELS: "false"
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
+    restart: unless-stopped
+
+  # --- Supabase Studio Management Dashboard ---
+  studio:
+    image: supabase/studio:latest
+    container_name: whosbidding-studio
+    ports:
+      - "${STUDIO_PORT:-54333}:3000"
+    environment:
+      STUDIO_PG_META_URL: http://db:5432
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SUPABASE_URL: http://web:3000
+      SUPABASE_PUBLIC_URL: http://localhost:54321
+    restart: unless-stopped
+
+volumes:
+  db-data:

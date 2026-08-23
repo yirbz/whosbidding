@@ -1,0 +1,66 @@
+{
+  "name": "whosbidding",
+  "version": "1.0.0",
+  "description": "Editorial data observatory & real-time bidding platform for bidding platforms.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docker:up": "docker compose up --build -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "db:push": "supabase db push",
+    "db:reset": "supabase db reset"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yirbz/whosbidding.git"
+  },
+  "keywords": [
+    "bidding",
+    "leaderboard",
+    "nextjs",
+    "supabase",
+    "paddle",
+    "realtime"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yirbz/whosbidding/issues"
+  },
+  "homepage": "https://github.com/yirbz/whosbidding#readme",
+  "dependencies": {
+    "@paddle/paddle-node-sdk": "^3.10.0",
+    "@supabase/supabase-js": "^2.112.3",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.1.1",
+    "lucide-react": "^1.33.0",
+    "next": "^16.3.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@typescript-eslint/parser": "^8.67.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.2",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^4.1.11"
+  }
+}
