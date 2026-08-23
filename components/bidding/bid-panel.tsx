@@ -148,6 +148,11 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
     <div className="w-full max-w-4xl mx-auto text-center space-y-8 select-none" suppressHydrationWarning>
       {/* Sleek Editorial Headline Stepper */}
       <div className="space-y-4">
+        {/* Satirical Category Badge */}
+        <div className="inline-block px-3 py-1 bg-[#202020] text-[#ffffff] rounded-full text-[11px] font-polysans uppercase tracking-widest">
+          Exclusively for Bidding Platform Startups
+        </div>
+
         <h1 className="text-[40px] sm:text-[56px] md:text-[66px] font-polysans font-normal text-[#202020] leading-[0.91] tracking-[-1.32px] flex items-center justify-center flex-wrap gap-3">
           <span>Claim #1 for</span>
           <button
@@ -190,7 +195,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </h1>
 
         <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] max-w-2xl mx-auto leading-[1.38]">
-          Why build a real product when you can just outbid everyone else for 15 minutes of internet clout? Press & hold + / - to bid higher faster.
+          The ultimate meta-observatory built strictly for bidding platforms. Why ship actual software when bidding platform founders can just outbid each other for temporary clout? Press & hold + / - to bid higher faster.
         </p>
       </div>
 
