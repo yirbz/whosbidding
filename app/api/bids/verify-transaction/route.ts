@@ -85,25 +85,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // 5. Broadcast real-time activity and outbid events
-    const channel = supabase.channel("leaderboard_live");
-    await channel.send({
-      type: "broadcast",
-      event: "new_bid_activity",
-      payload: {
-        startup_name: handle,
-        incremental_amount: targetBid,
-      },
-    });
+    // 5. Broadcast real-time activity and outbid events (non-blocking)
+    try {
+      const channel = supabase.channel("leaderboard_live");
+      await channel.send({
+        type: "broadcast",
+        event: "new_bid_activity",
+        payload: {
+          startup_name: handle,
+          incremental_amount: targetBid,
+        },
+      });
 
-    await channel.send({
-      type: "broadcast",
-      event: "outbid",
-      payload: {
-        new_leader_name: handle,
-        new_leader_bid: targetBid,
-      },
-    });
+      await channel.send({
+        type: "broadcast",
+        event: "outbid",
+        payload: {
+          new_leader_name: handle,
+          new_leader_bid: targetBid,
+        },
+      });
+    } catch (realtimeErr) {
+      console.warn("Realtime broadcast warning (non-blocking):", realtimeErr);
+    }
 
     // Invalidate Redis cache immediately
     await invalidateLeaderboardCache();

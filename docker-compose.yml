@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: production
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
-      SUPABASE_INTERNAL_URL: ${SUPABASE_INTERNAL_URL:-http://db:5432}
+      SUPABASE_INTERNAL_URL: ${SUPABASE_INTERNAL_URL:-http://rest:3000}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.placeholder-anon-key}
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY0MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.placeholder-service-key}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -22,6 +22,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      rest:
+        condition: service_started
       redis:
         condition: service_healthy
 
@@ -57,53 +59,20 @@ services:
       retries: 5
     restart: unless-stopped
 
-  # --- Supabase GoTrue Auth Service ---
-  auth:
-    image: supabase/gotrue:v2.151.0
-    container_name: whosbidding-auth
+  # --- PostgREST API (Direct REST Engine for @supabase/supabase-js on port 54321) ---
+  rest:
+    image: postgrest/postgrest:v12.0.2
+    container_name: whosbidding-rest
+    ports:
+      - "${REST_PORT:-54321}:3000"
+    environment:
+      PGRST_DB_URI: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/postgres?sslmode=disable
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: postgres
+      PGRST_JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      GOTRUE_API_HOST: 0.0.0.0
-      GOTRUE_API_PORT: 9999
-      API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
-      GOTRUE_API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
-      GOTRUE_DB_DRIVER: postgres
-      GOTRUE_DB_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/postgres?sslmode=disable
-      GOTRUE_SITE_URL: http://localhost:3000
-      GOTRUE_JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
-      GOTRUE_JWT_EXP: 3600
-      GOTRUE_DISABLE_SIGNUP: "false"
-    restart: unless-stopped
-
-  # --- Supabase Realtime WebSocket Engine ---
-  realtime:
-    image: supabase/realtime:v2.25.34
-    container_name: whosbidding-realtime
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      PORT: 4000
-      APP_NAME: realtime
-      REALTIME_APP_NAME: realtime
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      DB_NAME: postgres
-      DB_SCHEMA: _realtime
-      DB_AFTER_CONNECT_QUERY: 'SET search_path TO _realtime'
-      JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-super-secret-key-base-for-phoenix-realtime-min-64-chars-long-string}
-      DB_ENC_KEY: super-secret-db-enc-key-32-bytes
-      ERL_AFLAGS: "-proto_dist inet_tcp"
-      ENABLE_RLS: "true"
-      REPLICATION_MODE: RLS
-      REPLICATION_POLL_INTERVAL: 100
-      SECURE_CHANNELS: "false"
-      API_EXTERNAL_URL: ${API_EXTERNAL_URL:-http://localhost:54321}
     restart: unless-stopped
 
   # --- Supabase Studio Management Dashboard ---
