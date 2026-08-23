@@ -226,3 +226,12 @@ T020: components/bidding/bid-panel.tsx
 - [X] T043 Redesign `Claim #1 for - $15,005 +` hero headline in `components/bidding/bid-panel.tsx` into a high-end PolySans display with sleek integrated stepper controls per User Directive 4 (partial)
 - [X] T044 Fix input field left padding (`pl-14`) in `components/bidding/bid-calculator.tsx` so typed text never overlaps the icon per User Directive 5 (contradicts)
 - [X] T045 Update CTA button text in `components/bidding/bid-panel.tsx` from "Outbid" to "Bid" per User Directive 6 (contradicts)
+
+---
+
+## Phase 11: Convergence (About & Rules Legal/Technical Disclosures)
+
+**Purpose**: Expand the About and Rules modal components and create dedicated `/about` and `/rules` pages with comprehensive technical, legal, and operational disclosures: non-bidding startup removal policy, Paddle Merchant of Record terms, third-party unconsented placement terms, and site offline non-liability.
+
+- [X] T046 Create dedicated `/about` and `/rules` pages and expand modal dialogs in `components/ui/header.tsx` detailing why WhosBidding is strictly for bidding platforms per User Directive (partial)
+- [X] T047 Implement technical/legal disclaimer content covering Paddle Merchant of Record terms, non-bidding startup rank suppression, third-party unconsented submission terms, and offline site non-liability in `app/about/page.tsx` and `app/rules/page.tsx` per User Directive (missing)
