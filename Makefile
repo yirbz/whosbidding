@@ -40,14 +40,14 @@ logs: ## Stream live colored logs from all whosbidding containers
 
 docker-logs: logs
 
-db-up: ## Start local DB infrastructure (PostgreSQL, Redis, PostgREST, Studio)
-	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Redis, PostgREST, Studio)...\033[0m"
-	docker compose up -d db redis rest studio
+db-up: ## Start local DB infrastructure (PostgreSQL, Redis, Studio)
+	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Redis, Studio)...\033[0m"
+	docker compose up -d db redis studio
 	@echo "\033[1;32m✔ DB infrastructure is up.\033[0m"
 
 db-down: ## Stop local DB infrastructure
 	@echo "\033[1;34m▶ Stopping DB infrastructure...\033[0m"
-	docker compose stop db redis rest studio
+	docker compose stop db redis studio
 	@echo "\033[1;32m✔ DB infrastructure stopped.\033[0m"
 
 db-push: ## Apply database migrations via Supabase CLI

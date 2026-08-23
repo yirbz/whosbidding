@@ -9,10 +9,7 @@ services:
       - "${PORT:-3000}:3000"
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
-      SUPABASE_INTERNAL_URL: ${SUPABASE_INTERNAL_URL:-http://rest:3000}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.placeholder-anon-key}
-      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY0MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.placeholder-service-key}
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/postgres
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       PADDLE_API_KEY: ${PADDLE_API_KEY:-pdl_sandbox_test}
       PADDLE_WEBHOOK_SECRET: ${PADDLE_WEBHOOK_SECRET:-pdl_ntfset_test}
@@ -22,8 +19,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      rest:
-        condition: service_started
       redis:
         condition: service_healthy
 
@@ -40,7 +35,7 @@ services:
       timeout: 3s
       retries: 5
 
-  # --- Self-Hosted Supabase PostgreSQL Database ---
+  # --- Self-Hosted PostgreSQL Database ---
   db:
     image: supabase/postgres:15.1.1.78
     container_name: whosbidding-db
@@ -59,23 +54,7 @@ services:
       retries: 5
     restart: unless-stopped
 
-  # --- PostgREST API (Direct REST Engine for @supabase/supabase-js on port 54321) ---
-  rest:
-    image: postgrest/postgrest:v12.0.2
-    container_name: whosbidding-rest
-    ports:
-      - "${REST_PORT:-54321}:3000"
-    environment:
-      PGRST_DB_URI: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/postgres?sslmode=disable
-      PGRST_DB_SCHEMAS: public
-      PGRST_DB_ANON_ROLE: postgres
-      PGRST_JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-characters}
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: unless-stopped
-
-  # --- Supabase Studio Management Dashboard ---
+  # --- Studio Management Dashboard ---
   studio:
     image: supabase/studio:latest
     container_name: whosbidding-studio
@@ -85,7 +64,6 @@ services:
       STUDIO_PG_META_URL: http://db:5432
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       SUPABASE_URL: http://web:3000
-      SUPABASE_PUBLIC_URL: http://localhost:54321
     restart: unless-stopped
 
 volumes:

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPaddleClient } from "@/lib/adapters/paddle";
-import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
+import { db } from "@/lib/adapters/db";
 import { invalidateLeaderboardCache } from "@/lib/adapters/redis";
 import { sseBroadcaster } from "@/lib/adapters/sse-broadcaster";
 import { getLeaderboardData } from "@/lib/use-cases/get-leaderboard";
@@ -19,8 +19,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    const supabase = getSupabaseServerClient();
 
     // 1. Fetch transaction from Paddle Billing API
     let txn: any = null;
@@ -52,14 +50,7 @@ export async function POST(req: Request) {
     let targetBid = parseFloat(customData.target_bid_amount || customData.target_bid);
 
     // Fallback: look up pending bid in database
-    const { data: pendingBid } = await supabase
-      .from("bids")
-      .select("handle, target_bid, startup_id")
-      .eq("paddle_transaction_id", transaction_id)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
+    const pendingBid = await db.getPendingBidByTxnId(transaction_id);
     if (pendingBid) {
       handle = handle || pendingBid.handle;
       targetBid = isNaN(targetBid) ? parseFloat(pendingBid.target_bid) : targetBid;
@@ -79,22 +70,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4. Execute atomic stored procedure
-    const { data: rpcResult, error: rpcErr } = await supabase.rpc("confirm_bid_atomic", {
-      p_handle: handle,
-      p_website_url: websiteUrl,
-      p_target_bid: targetBid,
-      p_paddle_transaction_id: transaction_id,
-    });
-
-    if (rpcErr) {
-      console.error("[BID_VERIFY_RPC_ERROR] confirm_bid_atomic failed:", rpcErr);
-      return NextResponse.json(
-        { error: "RPC_ERROR", message: rpcErr.message },
-        { status: 500 }
-      );
-    }
-
+    // 4. Execute atomic stored procedure directly in PostgreSQL
+    const rpcResult = await db.confirmBidAtomic(handle, websiteUrl, targetBid, transaction_id);
     console.log(`[BID_VERIFY_SUCCESS] Database updated:`, rpcResult);
 
     // 5. Invalidate Redis cache immediately

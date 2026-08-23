@@ -1,22 +1,13 @@
 import { NextResponse } from "next/server";
-import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
+import { db } from "@/lib/adapters/db";
 
 const BASELINE_VISITORS = 0;
 
 export async function GET() {
   try {
-    const supabase = getSupabaseServerClient();
-    const { data, error } = await supabase
-      .from("site_analytics")
-      .select("total_visitors")
-      .eq("id", "global")
-      .single();
-
-    if (error || !data) {
-      return NextResponse.json({ total_visitors: BASELINE_VISITORS });
-    }
-
-    return NextResponse.json({ total_visitors: Number(data.total_visitors) });
+    const res = await db.query("SELECT total_visitors FROM site_analytics WHERE id = 'global'");
+    const total = res.rows[0]?.total_visitors;
+    return NextResponse.json({ total_visitors: total !== undefined ? Number(total) : BASELINE_VISITORS });
   } catch {
     return NextResponse.json({ total_visitors: BASELINE_VISITORS });
   }
@@ -24,24 +15,9 @@ export async function GET() {
 
 export async function POST() {
   try {
-    const supabase = getSupabaseServerClient();
-
-    // Call stored procedure increment_site_visitors
-    const { data, error } = await supabase.rpc("increment_site_visitors");
-
-    if (error || data === null) {
-      // Fallback: update table directly or return baseline + 1
-      const { data: selectData } = await supabase
-        .from("site_analytics")
-        .select("total_visitors")
-        .eq("id", "global")
-        .single();
-
-      const currentCount = selectData ? Number(selectData.total_visitors) + 1 : BASELINE_VISITORS + 1;
-      return NextResponse.json({ total_visitors: currentCount });
-    }
-
-    return NextResponse.json({ total_visitors: Number(data) });
+    const res = await db.query("SELECT increment_site_visitors() as total");
+    const count = res.rows[0]?.total;
+    return NextResponse.json({ total_visitors: count !== undefined ? Number(count) : BASELINE_VISITORS + 1 });
   } catch {
     return NextResponse.json({ total_visitors: BASELINE_VISITORS + 1 });
   }

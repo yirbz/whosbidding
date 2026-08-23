@@ -1,5 +1,5 @@
 import { createPaddleTransaction } from "@/lib/adapters/paddle";
-import { getSupabaseServerClient } from "@/lib/adapters/supabase-server";
+import { db } from "@/lib/adapters/db";
 import { validateBid } from "@/lib/domain/bid";
 
 export async function placeBidUseCase(params: {
@@ -7,18 +7,9 @@ export async function placeBidUseCase(params: {
   website_url?: string | null;
   target_bid: number;
 }) {
-  const supabase = getSupabaseServerClient();
-
-  // 1. Fetch current top leader startup
-  const { data: leaders } = await supabase
-    .from("startups")
-    .select("*")
-    .order("total_bid", { ascending: false })
-    .order("updated_at", { ascending: true })
-    .limit(1);
-
-  const currentLeader = leaders && leaders.length > 0 ? leaders[0] : null;
-  const currentLeaderBid = currentLeader ? parseFloat(currentLeader.total_bid) : 0;
+  // 1. Fetch current top leader startup directly from PostgreSQL
+  const leaderRow = await db.getLeader();
+  const currentLeaderBid = leaderRow ? parseFloat(leaderRow.total_bid) : 0;
 
   // 2. Validate bid using pure domain logic
   const validation = validateBid(params.target_bid, currentLeaderBid, params.handle);
@@ -41,13 +32,8 @@ export async function placeBidUseCase(params: {
     targetBid: params.target_bid,
   });
 
-  // 4. Record pending bid entry
-  await supabase.from("bids").insert({
-    handle: params.handle,
-    target_bid: params.target_bid,
-    paddle_transaction_id: paddleTxn.id,
-    status: "pending",
-  });
+  // 4. Record pending bid entry directly in PostgreSQL
+  await db.recordPendingBid(params.handle, params.target_bid, paddleTxn.id);
 
   return {
     success: true,
