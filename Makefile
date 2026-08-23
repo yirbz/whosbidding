@@ -1,6 +1,6 @@
 # WhosBidding — Developer Automation Makefile
 
-.PHONY: help dev build start test test-watch docker-up docker-down docker-logs db-push db-reset db-stop clean
+.PHONY: help dev build start test test-watch docker-up docker-down docker-logs db-up db-down db-push db-reset db-stop clean
 
 # Default target
 .DEFAULT_GOAL := help
@@ -25,12 +25,12 @@ test: ## Run unit and integration test suite once
 test-watch: ## Run test suite in watch mode
 	npx vitest
 
-docker-up: ## Build and start local docker compose containers
-	@echo "\033[1;34m▶ Starting whosbidding...\033[0m"
+docker-up: ## Build and start ALL containers (app + db infra)
+	@echo "\033[1;34m▶ Starting whosbidding app & DB infrastructure...\033[0m"
 	docker compose up --build -d
-	@echo "\033[1;32m✔ whosbidding services are up.\033[0m"
+	@echo "\033[1;32m✔ All whosbidding services are up.\033[0m"
 
-docker-down: ## Stop local docker compose containers
+docker-down: ## Stop all local docker containers
 	@echo "\033[1;34m▶ Stopping whosbidding...\033[0m"
 	docker compose down
 	@echo "\033[1;32m✔ whosbidding services stopped.\033[0m"
@@ -38,6 +38,16 @@ docker-down: ## Stop local docker compose containers
 docker-logs: ## Tail whosbidding docker logs
 	@echo "\033[1;34m[whosbidding logs]\033[0m"
 	docker compose logs -f
+
+db-up: ## Start local DB infrastructure (PostgreSQL, Realtime, Auth, Studio)
+	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Realtime, Auth, Studio)...\033[0m"
+	docker compose up -d db realtime auth studio
+	@echo "\033[1;32m✔ DB infrastructure is up.\033[0m"
+
+db-down: ## Stop local DB infrastructure
+	@echo "\033[1;34m▶ Stopping DB infrastructure...\033[0m"
+	docker compose stop db realtime auth studio
+	@echo "\033[1;32m✔ DB infrastructure stopped.\033[0m"
 
 db-push: ## Apply database migrations via Supabase CLI
 	npx supabase db push
