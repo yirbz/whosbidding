@@ -128,16 +128,24 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 7. Row Level Security (RLS)
+-- 7. Row Level Security (RLS) and Permissions
 ALTER TABLE public.startups ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.bids ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.site_analytics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.processed_webhook_events ENABLE ROW LEVEL SECURITY;
 
-DROP POLICY IF EXISTS "Public startups read" ON public.startups;
-CREATE POLICY "Public startups read" ON public.startups FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow all for startups" ON public.startups;
+CREATE POLICY "Allow all for startups" ON public.startups FOR ALL TO public USING (true) WITH CHECK (true);
 
-DROP POLICY IF EXISTS "Public bids read" ON public.bids;
-CREATE POLICY "Public bids read" ON public.bids FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow all for bids" ON public.bids;
+CREATE POLICY "Allow all for bids" ON public.bids FOR ALL TO public USING (true) WITH CHECK (true);
 
-DROP POLICY IF EXISTS "Public site_analytics read" ON public.site_analytics;
-CREATE POLICY "Public site_analytics read" ON public.site_analytics FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow all for site_analytics" ON public.site_analytics;
+CREATE POLICY "Allow all for site_analytics" ON public.site_analytics FOR ALL TO public USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow all for processed_webhook_events" ON public.processed_webhook_events;
+CREATE POLICY "Allow all for processed_webhook_events" ON public.processed_webhook_events FOR ALL TO public USING (true) WITH CHECK (true);
+
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO anon, authenticated, service_role;
