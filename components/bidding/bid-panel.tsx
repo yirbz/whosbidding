@@ -190,7 +190,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </h1>
 
         <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] max-w-2xl mx-auto leading-[1.38]">
-          The leaderboard for bidding platforms. Outbid other bidding sites to prove your bidding platform bids higher than theirs. Press & hold + / - to bid higher faster.
+          The leaderboard for bidding platforms. <span className="text-[#ff682c] font-semibold">Outbid</span> other bidding sites to prove your bidding platform bids higher than theirs. Press & hold + / - to bid higher faster.
         </p>
       </div>
 
