@@ -8,6 +8,7 @@ import { useLeaderboard } from "@/hooks/use-leaderboard";
 import { useOutbidNotifications } from "@/hooks/use-outbid-notifications";
 import { useActiveUsers } from "@/hooks/use-active-users";
 import { useVisitorStats } from "@/hooks/use-visitor-stats";
+import { Footer } from "@/components/ui/footer";
 
 export default function HomePage() {
   const { entries, isLoading, refresh } = useLeaderboard(50);
@@ -66,12 +67,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[#e8e8e8] dark:border-[#27272a] py-8 text-center text-[13px] font-inter text-[#828282] dark:text-[#71717a] bg-[#ffffff] dark:bg-[#0d0d0f] transition-colors">
-        <div className="max-w-[960px] mx-auto px-6">
-          WhosBidding • Startup Leaderboard Platform
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
