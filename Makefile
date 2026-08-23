@@ -1,6 +1,6 @@
 # WhosBidding — Developer Automation Makefile
 
-.PHONY: help dev build start test test-watch docker-up docker-down docker-logs db-up db-down db-push db-reset db-stop clean
+.PHONY: help dev build start test test-watch docker-up docker-down docker-logs logs db-up db-down db-push db-reset db-stop clean
 
 # Default target
 .DEFAULT_GOAL := help
@@ -35,9 +35,10 @@ docker-down: ## Stop all local docker containers
 	docker compose down
 	@echo "\033[1;32m✔ whosbidding services stopped.\033[0m"
 
-docker-logs: ## Tail whosbidding docker logs
-	@echo "\033[1;34m[whosbidding logs]\033[0m"
+logs: ## Stream live colored logs from all whosbidding containers
 	docker compose logs -f
+
+docker-logs: logs
 
 db-up: ## Start local DB infrastructure (PostgreSQL, Redis, PostgREST, Studio)
 	@echo "\033[1;34m▶ Starting DB infrastructure (PostgreSQL, Redis, PostgREST, Studio)...\033[0m"

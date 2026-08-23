@@ -18,10 +18,12 @@ export function useLeaderboard(limit = 50, offset = 0) {
       });
       if (res.ok) {
         const json = await res.json();
-        setEntries(json.data || []);
+        const data = json.data || [];
+        setEntries(data);
+        console.log(`%c[WhosBidding] 📊 Loaded ${data.length} leaderboard startups (Leader: $${json.meta?.leader_bid || 0})`, "color: #ff682c;");
       }
     } catch (err) {
-      console.error("Failed to fetch leaderboard:", err);
+      console.error("[WhosBidding] ❌ Failed to fetch leaderboard:", err);
     } finally {
       setIsLoading(false);
       isFetchingRef.current = false;

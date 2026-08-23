@@ -98,6 +98,9 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
 
     setIsSubmitting(true);
 
+    console.log("%c[WhosBidding] 🚀 Submitting bid:", "color: #ff682c; font-weight: bold;", { handle, targetBid });
+    toast.loading("Initiating bid with Paddle...", { id: "bid-init" });
+
     try {
       const trimmed = handle.trim();
       const isUrl = trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.includes(".");
@@ -116,16 +119,19 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
       });
 
       const json = await res.json();
+      console.log("%c[WhosBidding] 📩 /api/bids/create-transaction response:", "color: #059669; font-weight: bold;", json);
 
       if (!res.ok) {
-        toast.error(json.message || "Failed to create transaction");
+        toast.error(json.message || "Failed to create transaction", { id: "bid-init" });
         setIsSubmitting(false);
         return;
       }
 
       const txnId = json.transaction_id;
+      toast.success("Paddle transaction ready. Opening checkout...", { id: "bid-init" });
 
       if (window.Paddle) {
+        console.log("%c[WhosBidding] 🖼️ Opening Paddle Checkout for transactionId:", "color: #2563eb; font-weight: bold;", txnId);
         window.Paddle.Checkout.open({
           transactionId: txnId,
           displayMode: "inline",
@@ -133,8 +139,21 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
           frameInitialHeight: 450,
           frameStyle: "width: 100%; min-width: 320px; background-color: transparent; border: none;",
           eventCallback: async (event: any) => {
+            console.log("%c[WhosBidding] 🔔 Paddle.Checkout Event:", "color: #7c3aed; font-weight: bold;", event.name, event.data || event);
+
+            if (event.name === "checkout.loaded") {
+              toast.dismiss("bid-init");
+            }
+
+            if (event.name === "checkout.error") {
+              console.error("[WhosBidding] ❌ Paddle Checkout error:", event);
+              toast.error(`Paddle error: ${event.data?.message || "Checkout failed"}`);
+            }
+
             if (event.name === "checkout.completed" || event.name === "checkout.payment.completed") {
-              toast.loading("Verifying transaction and placing bid...", { id: "paddle-verify" });
+              console.log("%c[WhosBidding] 💳 Payment completed! Sending verification request for txnId:", "color: #059669; font-weight: bold;", txnId);
+              toast.loading("Payment received! Verifying and placing on leaderboard...", { id: "paddle-verify" });
+
               try {
                 const verifyRes = await fetch("/api/bids/verify-transaction", {
                   method: "POST",
@@ -142,27 +161,31 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
                   body: JSON.stringify({ transaction_id: txnId }),
                 });
                 const verifyJson = await verifyRes.json();
+                console.log("%c[WhosBidding] 🏆 /api/bids/verify-transaction result:", "color: #ff682c; font-weight: bold;", verifyJson);
+
                 if (verifyRes.ok && verifyJson.success) {
-                  toast.success("Payment confirmed! Your startup has been placed on the leaderboard.", { id: "paddle-verify" });
+                  toast.success(`🎉 Bid confirmed! ${trimmed} is now on the leaderboard.`, { id: "paddle-verify", duration: 5000 });
                   setHandle("");
                   onBidSuccess?.();
                 } else {
-                  toast.success("Payment processed! Leaderboard is updating...", { id: "paddle-verify" });
+                  toast.error(`Verification error: ${verifyJson.message || "Database update pending"}`, { id: "paddle-verify" });
                   onBidSuccess?.();
                 }
-              } catch {
-                toast.success("Payment completed! Leaderboard updated.", { id: "paddle-verify" });
+              } catch (verifyErr: any) {
+                console.error("[WhosBidding] ❌ Verification fetch error:", verifyErr);
+                toast.error("Failed to connect to verification API. Check server logs.", { id: "paddle-verify" });
                 onBidSuccess?.();
               }
             }
           },
         });
       } else {
-        toast.info("Paddle Checkout initialized in sandbox mode (simulated)");
+        console.warn("[WhosBidding] ⚠️ window.Paddle is not defined on window object.");
+        toast.error("Paddle.js library is not loaded. Check your browser connection or adblocker.", { id: "bid-init" });
       }
     } catch (err: any) {
-      console.error("Bid initiation error:", err);
-      toast.error("An unexpected error occurred. Please try again.");
+      console.error("[WhosBidding] ❌ Bid initiation error:", err);
+      toast.error("An unexpected error occurred. Please try again.", { id: "bid-init" });
     } finally {
       setIsSubmitting(false);
     }
