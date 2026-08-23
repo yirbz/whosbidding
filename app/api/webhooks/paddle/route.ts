@@ -5,9 +5,9 @@ export async function POST(req: Request) {
   try {
     const rawBody = await req.text();
     const signatureHeader = req.headers.get("paddle-signature") || "";
-    const secretKey = process.env.PADDLE_WEBHOOK_SECRET_KEY || "";
+    const secretKey = process.env.PADDLE_WEBHOOK_SECRET || process.env.PADDLE_WEBHOOK_SECRET_KEY || "";
 
-    // Verify webhook signature in production/test environment
+    // Verify webhook signature in production/test environment if secretKey is provided
     if (secretKey && !verifyPaddleWebhookSignature(rawBody, signatureHeader, secretKey)) {
       console.warn("Invalid Paddle webhook signature header");
       return NextResponse.json(

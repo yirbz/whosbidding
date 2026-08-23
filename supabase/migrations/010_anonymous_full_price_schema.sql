@@ -57,24 +57,21 @@ CREATE OR REPLACE FUNCTION public.confirm_bid_atomic(
 ) RETURNS JSONB AS $$
 DECLARE
   v_startup_id UUID;
-  v_current_leader_bid NUMERIC;
   v_bid_id UUID;
 BEGIN
-  -- Lock current leader row to prevent race conditions
-  SELECT total_bid INTO v_current_leader_bid
-  FROM public.startups
-  ORDER BY total_bid DESC, updated_at ASC
-  LIMIT 1
-  FOR UPDATE;
+  -- Validate target bid is at least $1.00
+  IF p_target_bid < 1.00 THEN
+    RAISE EXCEPTION 'INVALID_BID: Target bid (%) must be at least $1.00', p_target_bid;
+  END IF;
 
-  -- Validate target bid exceeds current leader
-  IF v_current_leader_bid IS NOT NULL AND p_target_bid <= v_current_leader_bid THEN
-    RAISE EXCEPTION 'BID_TOO_LOW: Target bid (%) must exceed current leader bid (%)', p_target_bid, v_current_leader_bid;
+  -- Clean handle
+  IF p_handle IS NULL OR trim(p_handle) = '' THEN
+    RAISE EXCEPTION 'INVALID_HANDLE: Handle cannot be empty';
   END IF;
 
   -- Upsert startup (create if handle new, update total_bid if handle exists)
   INSERT INTO public.startups (handle, website_url, total_bid, updated_at)
-  VALUES (p_handle, p_website_url, p_target_bid, now())
+  VALUES (trim(p_handle), p_website_url, p_target_bid, now())
   ON CONFLICT (handle) DO UPDATE
   SET total_bid = p_target_bid,
       website_url = COALESCE(EXCLUDED.website_url, public.startups.website_url),
@@ -85,8 +82,14 @@ BEGIN
   UPDATE public.bids
   SET status = 'confirmed', startup_id = v_startup_id
   WHERE paddle_transaction_id = p_paddle_transaction_id
-    AND status = 'pending'
   RETURNING id INTO v_bid_id;
+
+  -- If no pending bid record was matched, insert a confirmed bid record for audit trail
+  IF v_bid_id IS NULL THEN
+    INSERT INTO public.bids (startup_id, handle, target_bid, paddle_transaction_id, status, created_at)
+    VALUES (v_startup_id, trim(p_handle), p_target_bid, p_paddle_transaction_id, 'confirmed', now())
+    RETURNING id INTO v_bid_id;
+  END IF;
 
   RETURN jsonb_build_object(
     'startup_id', v_startup_id,

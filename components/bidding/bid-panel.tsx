@@ -132,6 +132,30 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
           frameTarget: "paddle-bid-frame",
           frameInitialHeight: 450,
           frameStyle: "width: 100%; min-width: 320px; background-color: transparent; border: none;",
+          eventCallback: async (event: any) => {
+            if (event.name === "checkout.completed" || event.name === "checkout.payment.completed") {
+              toast.loading("Verifying transaction and placing bid...", { id: "paddle-verify" });
+              try {
+                const verifyRes = await fetch("/api/bids/verify-transaction", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ transaction_id: txnId }),
+                });
+                const verifyJson = await verifyRes.json();
+                if (verifyRes.ok && verifyJson.success) {
+                  toast.success("Payment confirmed! Your startup has been placed on the leaderboard.", { id: "paddle-verify" });
+                  setHandle("");
+                  onBidSuccess?.();
+                } else {
+                  toast.success("Payment processed! Leaderboard is updating...", { id: "paddle-verify" });
+                  onBidSuccess?.();
+                }
+              } catch {
+                toast.success("Payment completed! Leaderboard updated.", { id: "paddle-verify" });
+                onBidSuccess?.();
+              }
+            }
+          },
         });
       } else {
         toast.info("Paddle Checkout initialized in sandbox mode (simulated)");

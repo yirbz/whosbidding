@@ -68,15 +68,36 @@ export async function confirmBidWebhookUseCase(eventPayload: any) {
   }
 
   // 2. Handle transaction.completed
-  if (event_type === "transaction.completed") {
+  if (event_type === "transaction.completed" || event_type === "transaction.billed" || event_type === "transaction.paid") {
     const customData = data.custom_data || {};
-    const handle = customData.handle;
-    const websiteUrl = customData.website_url || null;
-    const targetBid = parseFloat(customData.target_bid_amount);
+    let handle = customData.handle ? String(customData.handle).trim() : null;
+    let websiteUrl = customData.website_url ? String(customData.website_url).trim() : null;
+    let targetBid = parseFloat(customData.target_bid_amount || customData.target_bid);
 
+    // Fallback: If custom_data was not included or missing, look up the pending bid in the database
     if (!handle || isNaN(targetBid)) {
-      console.error("Missing customData in Paddle transaction:", data.id);
-      return { success: false, message: "Missing customData parameters" };
+      const { data: pendingBid } = await supabase
+        .from("bids")
+        .select("handle, target_bid, startup_id")
+        .eq("paddle_transaction_id", data.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (pendingBid) {
+        handle = handle || pendingBid.handle;
+        targetBid = isNaN(targetBid) ? parseFloat(pendingBid.target_bid) : targetBid;
+      }
+    }
+
+    // Secondary fallback: parse from transaction total if available
+    if (isNaN(targetBid) && data.details?.totals?.total) {
+      targetBid = parseFloat(data.details.totals.total) / 100;
+    }
+
+    if (!handle || isNaN(targetBid) || targetBid < 1.00) {
+      console.error("Missing handle or valid target_bid in Paddle transaction:", data.id);
+      return { success: false, message: "Missing handle or valid target_bid parameter" };
     }
 
     // Execute atomic bid confirmation stored procedure
