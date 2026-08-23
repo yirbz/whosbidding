@@ -32,6 +32,10 @@ export async function createPaddleTransaction(params: {
             name: "WhosBidding Leaderboard #1 Rank Placement",
             taxCategory: "standard",
           },
+          quantity: {
+            minimum: 1,
+            maximum: 1,
+          },
         },
         quantity: 1,
       },
