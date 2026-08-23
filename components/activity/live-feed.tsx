@@ -11,13 +11,8 @@ interface ActivityItem {
   time: string;
 }
 
-const sampleActivities: ActivityItem[] = [
-  { id: "1", startupName: "@BidStack", amount: 10, time: "2 mins ago" },
-  { id: "2", startupName: "@AuctionBase", amount: 5, time: "15 mins ago" },
-];
-
 export function LiveBidFeed() {
-  const [activities, setActivities] = useState<ActivityItem[]>(sampleActivities);
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -62,6 +57,10 @@ export function LiveBidFeed() {
       supabase.removeChannel(channel);
     };
   }, []);
+
+  if (activities.length === 0) {
+    return null;
+  }
 
   return (
     <div className="w-full">

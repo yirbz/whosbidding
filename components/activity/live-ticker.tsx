@@ -5,14 +5,9 @@ interface TickerItem {
   bid: number;
 }
 
-const sampleTickerItems: TickerItem[] = [
-  { name: "BidOnMyBid.io", bid: 1050 },
-  { name: "PayToWinStartups.com", bid: 1005 },
-  { name: "LeaderboardLarp.ai", bid: 500 },
-  { name: "UltimateBidderMeta.xyz", bid: 250 },
-];
+export function LiveBiddingTicker({ items }: { items?: TickerItem[] }) {
+  if (!items || items.length === 0) return null;
 
-export function LiveBiddingTicker({ items = sampleTickerItems }: { items?: TickerItem[] }) {
   const displayItems = [...items, ...items, ...items, ...items];
 
   return (
