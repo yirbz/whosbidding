@@ -7,14 +7,22 @@ import { Header } from "@/components/ui/header";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
-  title: "WhosBidding",
-  description: "Bid to get your startup to #1 on the leaderboard. Live low-latency bidding.",
+  metadataBase: new URL("https://whosbidding.lol"),
+  title: "WhosBidding — Real-Time Data Observatory for Bidding Platforms",
+  description: "Interactive real-time data observatory and software benchmark index tracking competitive bidding platforms and auction software systems.",
   icons: {
     icon: [
       { url: "/whosbidding_favicon_v3.svg", type: "image/svg+xml" },
     ],
     shortcut: "/whosbidding_favicon_v3.svg",
     apple: "/whosbidding_favicon_v3.svg",
+  },
+  openGraph: {
+    title: "WhosBidding — Real-Time Software Data Observatory",
+    description: "Interactive data observatory and benchmark index for bidding platforms and auction software.",
+    url: "https://whosbidding.lol",
+    siteName: "WhosBidding",
+    type: "website",
   },
 };
 

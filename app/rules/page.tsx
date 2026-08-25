@@ -39,10 +39,10 @@ export default function RulesPage() {
           {/* Rule 2 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 2: Minimum Benchmark Bid & Dynamic Surpassing
+              Rule 2: Minimum Benchmark Index Fee & Dynamic Surpassing
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              The initial minimum index entry fee is $1.00. To establish the #1 rank in the benchmark index, a submission must equal or exceed the required target threshold ($1.00 higher than current leader or starting benchmark). Submissions are processed atomically per transaction.
+              The base software indexing transaction fee starts at $1.00 USD. To attain the top position (#1 rank) within the live benchmark index, a submission must match or exceed the target threshold ($1.00 USD above the current benchmark leader). Transactions are cryptographically executed and stored atomically in PostgreSQL.
             </p>
           </div>
 

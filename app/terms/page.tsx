@@ -30,10 +30,10 @@ export default function TermsPage() {
           {/* Section 1 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              1. Agreement to Terms
+              1. Agreement to Terms & Operating Entity
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Welcome to <strong>WhosBidding</strong> (“WhosBidding”, “we”, “our”, or “the Platform”). By accessing our software website (https://whosbidding.vercel.app), utilizing our real-time data index, or submitting a digital benchmark entry, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access the Platform.
+              Welcome to <strong>WhosBidding</strong>. WhosBidding is owned and operated by <strong>Fintral</strong> (Sole Proprietorship: <strong>Nereyda Herrera Montero</strong>) (“Fintral”, “WhosBidding”, “we”, “our”, or “us”). By accessing our software website (https://whosbidding.lol), utilizing our real-time data index, or purchasing a digital benchmark index entry, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access or use the Platform.
             </p>
           </section>
 
@@ -119,12 +119,12 @@ export default function TermsPage() {
           {/* Section 9 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              9. Contact Information
+              9. Contact & Operator Information
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              If you have any questions or legal inquiries regarding these Terms, please contact us at:{" "}
-              <a href="mailto:support@whosbidding.com" className="text-[#ff682c] underline">
-                support@whosbidding.com
+              WhosBidding is operated by <strong>Fintral</strong> (Sole Proprietor: <strong>Nereyda Herrera Montero</strong>). For customer support, billing inquiries, or legal compliance notices, please contact:{" "}
+              <a href="mailto:support@whosbidding.lol" className="text-[#ff682c] underline">
+                support@whosbidding.lol
               </a>.
             </p>
           </section>

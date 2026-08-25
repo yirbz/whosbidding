@@ -62,7 +62,7 @@ export default function AboutPage() {
               4. Disclaimer of Liability & External Systems
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding does not own, operate, or maintain external third-party bidding platforms listed in the dataset. Placements in the benchmark dataset reflect community-submitted entries processed through our software index algorithm.
+              WhosBidding is operated by <strong>Fintral</strong> (Sole Proprietor: <strong>Nereyda Herrera Montero</strong>). WhosBidding does not own, operate, or maintain external third-party bidding platforms listed in the dataset. Software records in the benchmark dataset reflect public community submissions evaluated by our automated indexing engine.
             </p>
           </div>
 

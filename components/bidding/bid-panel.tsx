@@ -240,7 +240,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </h1>
 
         <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl mx-auto leading-[1.38]">
-          The real-time data observatory and benchmark index for bidding platforms. <span className="text-[#ff682c] font-semibold">Outbid</span> other bidding sites to benchmark your platform in the live software index. Press & hold + / - to adjust faster.
+          The real-time data observatory and automated benchmark index for bidding platforms. Benchmark your platform in the live software index. Press & hold + / - to adjust the index threshold.
         </p>
       </div>
 
@@ -254,12 +254,12 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
             loading={isSubmitting}
             className="h-[52px] px-10 text-[16px] font-polysans rounded-full whitespace-nowrap self-stretch sm:self-auto min-w-[120px]"
           >
-            {isSubmitting ? "Opening..." : "Bid"}
+            {isSubmitting ? "Opening..." : "Index Platform"}
           </Button>
         </div>
 
         <p className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
-          Already in the index? Enter the same URL or @handle to update your benchmark rank.
+          Already in the index? Enter the same software URL or @handle to update your benchmark rank.
         </p>
       </div>
 
