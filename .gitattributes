@@ -1,0 +1,3 @@
+# GitHub Linguist Overrides
+# Exclude agent tooling scripts from repository language statistics
+.agents/** linguist-vendored linguist-detectable=false
