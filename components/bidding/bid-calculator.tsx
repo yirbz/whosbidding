@@ -60,7 +60,7 @@ export function BidCalculator({ handle, onHandleChange }: BidCalculatorProps) {
         required
         value={handle}
         onChange={(e) => onHandleChange(e.target.value)}
-        placeholder="Your product URL or @handle"
+        placeholder="Your software URL or @handle"
         className="w-full h-[52px] pl-14 pr-4 bg-[#ffffff] dark:bg-[#18181b] text-[#202020] dark:text-[#f4f4f5] border border-[#202020] dark:border-[#3f3f46] text-[16px] font-inter rounded-full focus:outline-none focus:ring-2 focus:ring-[#202020] dark:focus:ring-[#f4f4f5] transition-all placeholder:text-[#828282] dark:placeholder:text-[#71717a]"
       />
     </div>
