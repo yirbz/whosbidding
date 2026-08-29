@@ -16,7 +16,7 @@ export default function RefundPolicyPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Observatory
+            ← Back to Leaderboard
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
             Refund & Cancellation Policy

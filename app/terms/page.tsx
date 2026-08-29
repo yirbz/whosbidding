@@ -16,13 +16,13 @@ export default function TermsPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Observatory
+            ← Back to Leaderboard
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
             Terms of Service
           </h1>
           <p className="text-[14px] text-[#828282] dark:text-[#71717a]">
-            Last updated: August 23, 2026
+            Last updated: August 29, 2026
           </p>
         </div>
 
@@ -33,20 +33,17 @@ export default function TermsPage() {
               1. Agreement to Terms & Operating Entity
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Welcome to <strong>WhosBidding</strong>. WhosBidding is owned and operated by <strong>Fintral</strong> (Sole Proprietorship: <strong>Nereyda Herrera Montero</strong>) (“Fintral”, “WhosBidding”, “we”, “our”, or “us”). By accessing our software website (https://whosbidding.lol), utilizing our real-time data index, or purchasing a digital benchmark index entry, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access or use the Platform.
+              Welcome to <strong>WhosBidding</strong>. WhosBidding is owned and operated by <strong>Fintral</strong> (Sole Proprietorship: <strong>Nereyda Herrera Montero</strong>) (“Fintral”, “WhosBidding”, “we”, “our”, or “us”). By accessing our website (https://whosbidding.lol), viewing our real-time leaderboard, or purchasing a bid placement, you agree to be legally bound by these Terms of Service (“Terms”). If you do not agree with any part of these Terms, you must not access or use the Platform.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              2. Description of Digital Software Service & Benchmark Index
+              2. Description of Digital Service & Bidding Platform Leaderboard
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is an interactive software application and real-time data observatory designed to track, benchmark, and compare bidding platforms and auction software systems. When a user submits an entry, they purchase a <strong>digital software service</strong> encompassing real-time data indexing, live telemetry recording, and entry into our automated ranking index algorithm.
-            </p>
-            <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is <strong>not</strong> an advertising agency, marketing network, or publisher of paid sponsored ads. The service provided is an interactive software benchmark dataset and computational ranking engine.
+              WhosBidding is an interactive software application and real-time meta-leaderboard designed exclusively to track and rank competitive bidding platforms. When a user submits a bid, they purchase a <strong>digital software service</strong> encompassing real-time database recording, live telemetry broadcasting, and ranking placement in our leaderboard system.
             </p>
           </section>
 
@@ -63,13 +60,13 @@ export default function TermsPage() {
           {/* Section 4 */}
           <section className="space-y-3">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              4. Platform Scope & Data Moderation Policy
+              4. Strict Bidding Platform Scope & Rank Suppression Policy
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is dedicated exclusively to indexing bidding platforms, auction software, and competitive market software. If a submitted handle or URL represents a general SaaS product, e-commerce storefront, personal portfolio, or unrelated non-bidding product, WhosBidding administrators reserve the right to <strong>suppress and filter</strong> the entry from the public data index to protect dataset integrity.
+              WhosBidding is a specialized meta-platform built strictly and exclusively for bidding platforms, auction software, and competitive leaderboard projects. If a user submits a bid for a general SaaS product, e-commerce storefront, personal portfolio, or any startup that is <strong>not</strong> a bidding platform, administrators reserve the absolute right to <strong>suppress and hide</strong> the entry from the public leaderboard rankings.
             </p>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Because computing power, indexing pipelines, and real-time database transactions are instantly utilized upon confirmation, filtered non-qualifying entries are not eligible for refunds.
+              Please note that all users are expected to review and agree to these Terms of Service prior to placing a bid. Because computational database writes, real-time broadcasting, and Merchant of Record payment processing resources are consumed instantaneously upon checkout confirmation, <strong>suppressed non-bidding entries will not receive a refund under any circumstances</strong>.
             </p>
           </section>
 
