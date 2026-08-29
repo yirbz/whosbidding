@@ -15,13 +15,13 @@ export default function AboutPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Observatory
+            ← Back to Leaderboard
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
             About WhosBidding
           </h1>
           <p className="text-[16px] md:text-[18px] text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl leading-[1.4]">
-            An interactive data observatory and live benchmark software platform dedicated to tracking and indexing bidding technologies.
+            An authentic meta-observatory and live leaderboard built strictly for bidding platform startups.
           </p>
         </div>
 
@@ -29,20 +29,20 @@ export default function AboutPage() {
           {/* Section 1 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              1. Real-Time Software Observatory & Indexing Engine
+              1. Exclusively for Bidding Platform Startups
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is an interactive software platform that monitors, verifies, and indexes bidding platform software. It provides developers, founders, and community analysts with real-time telemetry, live benchmark data, and an interactive ranking engine to observe competitive bidding thresholds across the industry.
+              WhosBidding is an intentional meta-experiment designed strictly for bidding platforms, auction software, and competitive leaderboard projects. Why build actual software when bidding platform founders can just outbid each other for 15 minutes of temporary internet clout? If you place a bid for a general SaaS, e-commerce storefront, personal portfolio, or non-bidding product, your entry will be suppressed and hidden from the public leaderboard rank list without refund to preserve the purity of the meta-joke.
             </p>
           </div>
 
           {/* Section 2 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              2. Digital Software Service vs. Advertising
+              2. Anonymous Submissions & Third-Party Unconsented Placements
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is <strong>not an advertising agency, marketing network, or promotional ad space seller</strong>. Transactions on WhosBidding represent digital software utility fees for live database entry verification, telemetry recording, and computational index benchmarking within our real-time software engine.
+              All bids on WhosBidding are 100% anonymous and require zero user account creation. Because anyone can enter any publicly accessible startup URL or @handle, a bidding platform may be placed on the leaderboard by third-party bidders without the direct knowledge or consent of the platform’s founders. Inclusion on WhosBidding does not imply official endorsement, partnership, or affiliation.
             </p>
           </div>
 
@@ -59,10 +59,10 @@ export default function AboutPage() {
           {/* Section 4 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              4. Disclaimer of Liability & External Systems
+              4. Disclaimer of Liability & Offline Sites
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is operated by <strong>Fintral</strong> (Sole Proprietor: <strong>Nereyda Herrera Montero</strong>). WhosBidding does not own, operate, or maintain external third-party bidding platforms listed in the dataset. Software records in the benchmark dataset reflect public community submissions evaluated by our automated indexing engine.
+              WhosBidding is operated by <strong>Fintral</strong> (Sole Proprietor: <strong>Nereyda Herrera Montero</strong>). WhosBidding does not own, operate, monitor, or verify third-party bidding platforms listed on the board. We accept zero responsibility or legal liability if a listed startup goes offline, undergoes a domain change, gets taken down, or ceases business operations.
             </p>
           </div>
 

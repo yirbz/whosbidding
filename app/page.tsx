@@ -59,7 +59,7 @@ export default function HomePage() {
               Top 50 Leaderboard
             </h2>
             <span className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
-              Showing top 50 bidding startups
+              Showing top 50 bidding platforms
             </span>
           </div>
 

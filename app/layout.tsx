@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://whosbidding.lol"),
-  title: "WhosBidding — Real-Time Data Observatory for Bidding Platforms",
-  description: "Interactive real-time data observatory and software benchmark index tracking competitive bidding platforms and auction software systems.",
+  title: "WhosBidding — The Leaderboard for Bidding Platforms",
+  description: "The leaderboard where bidding platforms bid against each other. Outbid the competition. Claim #1.",
   icons: {
     icon: [
       { url: "/whosbidding_favicon_v3.svg", type: "image/svg+xml" },
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     apple: "/whosbidding_favicon_v3.svg",
   },
   openGraph: {
-    title: "WhosBidding — Real-Time Software Data Observatory",
-    description: "Interactive data observatory and benchmark index for bidding platforms and auction software.",
+    title: "WhosBidding — The Leaderboard for Bidding Platforms",
+    description: "Bidding platforms bidding against bidding platforms. The ultimate leaderboard.",
     url: "https://whosbidding.lol",
     siteName: "WhosBidding",
     type: "website",

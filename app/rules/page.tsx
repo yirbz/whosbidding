@@ -15,13 +15,13 @@ export default function RulesPage() {
             href="/"
             className="text-[13px] font-inter text-[#ff682c] hover:underline inline-flex items-center gap-1"
           >
-            ← Back to Observatory
+            ← Back to Leaderboard
           </Link>
           <h1 className="text-[36px] md:text-[48px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-1px]">
-            Platform Rules & Index Policies
+            Platform Rules & Disclaimers
           </h1>
           <p className="text-[16px] md:text-[18px] text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl leading-[1.4]">
-            Official guidelines governing bidding software indexing eligibility, data filtering, payment terms, and legal policies.
+            Official guidelines governing bidding eligibility, rank suppression, payment terms, and liability.
           </p>
         </div>
 
@@ -29,20 +29,20 @@ export default function RulesPage() {
           {/* Rule 1 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 1: Bidding Platform Qualification & Data Filtering
+              Rule 1: Bidding Platform Qualification & Rank Suppression
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              WhosBidding is exclusively dedicated to indexing bidding platforms, auction marketplace software, and dynamic pricing tools. If an entry is submitted for a non-bidding product, general SaaS, personal portfolio, or unrelated URL, administrators reserve the right to filter and suppress the entry from the public data index to ensure data purity. No refunds are issued for non-qualifying filtered entries.
+              WhosBidding is exclusively reserved for bidding platform startups. If an entry is submitted for a non-bidding product, standard SaaS, personal portfolio, or unrelated URL, administrators reserve the absolute right to suppress and hide the entry from the public leaderboard rank list. No refunds are issued for suppressed non-qualifying entries.
             </p>
           </div>
 
           {/* Rule 2 */}
           <div className="space-y-2">
             <h2 className="text-[22px] font-polysans font-normal text-[#202020] dark:text-[#f4f4f5]">
-              Rule 2: Minimum Benchmark Index Fee & Dynamic Surpassing
+              Rule 2: Minimum Bid & Surpassing Model
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              The base software indexing transaction fee starts at $1.00 USD. To attain the top position (#1 rank) within the live benchmark index, a submission must match or exceed the target threshold ($1.00 USD above the current benchmark leader). Transactions are cryptographically executed and stored atomically in PostgreSQL.
+              The initial minimum bid starts at $1.00. To claim the #1 rank, a bid must equal or exceed the target bid threshold ($1.00 above the current leader). Bidders pay 100% of the target bid amount per transaction.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function RulesPage() {
               Rule 3: Paddle Merchant of Record & Payment Finality
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              All digital software transactions are securely billed and processed by <strong>Paddle.com</strong>, our Merchant of Record. All sales are final once confirmed by Paddle. Because dataset recalculation and ranking execution occur instantaneously, standard refunds are not provided, as outlined in our{" "}
+              All transactions are securely billed and processed by <strong>Paddle.com</strong>, our official Merchant of Record. All sales are final once confirmed by Paddle. Because dataset recalculation and ranking execution occur instantaneously, standard refunds are not provided, as outlined in our{" "}
               <Link href="/refund" className="text-[#ff682c] underline">
                 Refund Policy
               </Link>.
@@ -65,7 +65,7 @@ export default function RulesPage() {
               Rule 4: Community Submissions & Non-Affiliation
             </h2>
             <p className="text-[#4d4d4d] dark:text-[#a1a1aa]">
-              Because indexing submissions are anonymous and account-free, any public bidding platform may be submitted by community participants. Inclusion in the WhosBidding benchmark index does not imply endorsement, authorization, or partnership with the target platform owners.
+              Because bids are anonymous and account-free, any public startup may be placed by any third-party bidder. Inclusion on WhosBidding does not imply endorsement, sponsorship, or authorization by the target startup owners.
             </p>
           </div>
 

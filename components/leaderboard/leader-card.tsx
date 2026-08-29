@@ -20,7 +20,7 @@ export function LeaderCard({ handle, totalBid, websiteUrl }: LeaderCardProps) {
     <AsymmetricCard className="w-full border border-[#e8e8e8]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="space-y-3">
-          <Tag variant="ember">#1 Top Meta-Bidder</Tag>
+          <Tag variant="ember">#1 Top Bidder</Tag>
 
           <h2 className="text-[32px] md:text-[40px] font-polysans font-normal text-[#202020] leading-[1.2] tracking-[-0.8px]">
             {handle}
@@ -42,7 +42,7 @@ export function LeaderCard({ handle, totalBid, websiteUrl }: LeaderCardProps) {
 
         <div className="text-left md:text-right border-t md:border-t-0 pt-4 md:pt-0 border-[#e8e8e8] w-full md:w-auto">
           <span className="text-[13px] font-inter uppercase tracking-wider text-[#828282]">
-            Current Meta-Leader Price
+            Current Top Bid
           </span>
           <div className="text-[40px] md:text-[66px] font-polysans text-[#202020] leading-[0.91] tracking-[-1.32px] mt-2">
             {formattedBid}

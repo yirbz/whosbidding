@@ -96,10 +96,10 @@ export function LeaderboardRow({ entry }: LeaderboardRowProps) {
           </div>
         </div>
 
-        {/* Right Side: Big Total Placement Bid Display */}
+        {/* Right Side: Big Total Bid Display */}
         <div className="text-left sm:text-right flex-shrink-0 pt-1 sm:pt-0">
           <span className="text-[11px] font-inter uppercase tracking-wider text-[#828282] dark:text-[#71717a] block mb-0.5 sm:mb-1">
-            Total Placement Bid
+            Total Bid
           </span>
           <div className="font-polysans text-[28px] md:text-[34px] text-[#202020] dark:text-[#f4f4f5] leading-[1.0] tracking-[-0.64px]">
             {formattedBid}

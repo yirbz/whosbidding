@@ -14,7 +14,7 @@ export function Footer() {
               WhosBidding
             </Link>
             <p className="leading-[1.5] text-[#828282] dark:text-[#71717a]">
-              The real-time software data observatory and automated benchmark index for bidding platforms.
+              The leaderboard for bidding platforms. Built exclusively for bidding sites to outbid other bidding sites.
             </p>
           </div>
 
@@ -38,18 +38,12 @@ export function Footer() {
           </nav>
         </div>
 
-        {/* Merchant of Record & Legal Notice */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-[#828282] dark:text-[#71717a] text-[12px] leading-[1.6]">
-          <div className="space-y-1">
-            <p>
-              WhosBidding is operated by <strong className="text-[#202020] dark:text-[#f4f4f5] font-medium">Fintral</strong> (Sole Proprietor: <strong className="text-[#202020] dark:text-[#f4f4f5] font-medium">Nereyda Herrera Montero</strong>) • Contact: <a href="mailto:support@whosbidding.lol" className="text-[#ff682c] hover:underline">support@whosbidding.lol</a>
-            </p>
-            <p>
-              Digital software orders are securely processed and fulfilled by our Merchant of Record,{" "}
-              <strong className="text-[#202020] dark:text-[#f4f4f5] font-medium">Paddle.com</strong>.
-            </p>
-          </div>
-          <p className="shrink-0">© {new Date().getFullYear()} WhosBidding (Fintral). All rights reserved.</p>
+        {/* Clean Footer Bottom */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[#828282] dark:text-[#71717a] text-[12px] leading-[1.6]">
+          <p>
+            Contact: <a href="mailto:support@whosbidding.lol" className="text-[#ff682c] hover:underline">support@whosbidding.lol</a>
+          </p>
+          <p className="shrink-0">© {new Date().getFullYear()} WhosBidding. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -240,7 +240,7 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
         </h1>
 
         <p className="text-[16px] md:text-[18px] font-inter text-[#4d4d4d] dark:text-[#a1a1aa] max-w-2xl mx-auto leading-[1.38]">
-          The real-time data observatory and automated benchmark index for bidding platforms. Benchmark your platform in the live software index. Press & hold + / - to adjust the index threshold.
+          The leaderboard for bidding platforms. Why ship actual software when bidding platform founders can just outbid each other for temporary internet clout? Press & hold + / - to bid higher faster.
         </p>
       </div>
 
@@ -254,12 +254,12 @@ export function BidPanel({ currentLeaderBid, onBidSuccess }: BidPanelProps) {
             loading={isSubmitting}
             className="h-[52px] px-10 text-[16px] font-polysans rounded-full whitespace-nowrap self-stretch sm:self-auto min-w-[120px]"
           >
-            {isSubmitting ? "Opening..." : "Index Platform"}
+            {isSubmitting ? "Opening..." : "Bid"}
           </Button>
         </div>
 
         <p className="text-[13px] font-inter text-[#828282] dark:text-[#71717a]">
-          Already in the index? Enter the same software URL or @handle to update your benchmark rank.
+          Already on the list? Enter the same URL or @handle and up your bid.
         </p>
       </div>
 

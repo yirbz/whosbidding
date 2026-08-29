@@ -55,7 +55,7 @@ export function LiveBidFeed() {
   return (
     <div className="w-full">
       <h4 className="font-polysans text-[18px] text-[#828282] uppercase tracking-wider mb-3">
-        Live Activity Feed
+        Live Bids
       </h4>
       <ul className="divide-y divide-[#e8e8e8] bg-[#efefef] rounded-[8px] p-0 m-0 list-none overflow-hidden">
         <AnimatePresence initial={false}>

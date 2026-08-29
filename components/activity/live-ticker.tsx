@@ -21,7 +21,7 @@ export function LiveBiddingTicker({ items }: { items?: TickerItem[] }) {
             <span className="font-polysans text-[#202020]">
               {item.name}
             </span>
-            <span>meta-bid</span>
+            <span>bid</span>
             <span className="font-polysans text-[#ff682c]">
               ${item.bid.toFixed(2)}
             </span>
