@@ -33,6 +33,7 @@ export const supabaseDb = {
     const { data, error } = await supabase
       .from("startups")
       .select("id, handle, website_url, total_bid, created_at, updated_at")
+      .eq("is_hidden", false)
       .order("total_bid", { ascending: false })
       .order("updated_at", { ascending: true })
       .range(offset, offset + limit - 1);
@@ -101,6 +102,7 @@ export const supabaseDb = {
     const { data, error } = await supabase
       .from("startups")
       .select("total_bid, handle")
+      .eq("is_hidden", false)
       .order("total_bid", { ascending: false })
       .order("updated_at", { ascending: true })
       .limit(1)
@@ -108,6 +110,53 @@ export const supabaseDb = {
 
     if (error) {
       return null;
+    }
+    return data;
+  },
+
+  async getAllStartupsAdmin(limit = 100, offset = 0) {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("startups")
+      .select("id, handle, website_url, total_bid, is_hidden, created_at, updated_at")
+      .order("total_bid", { ascending: false })
+      .order("updated_at", { ascending: true })
+      .range(offset, offset + limit - 1);
+
+    if (error) {
+      console.error("[SUPABASE_GET_ADMIN_STARTUPS_ERROR]", error.message);
+      throw error;
+    }
+    return data || [];
+  },
+
+  async setStartupHiddenById(id: string, isHidden: boolean) {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("startups")
+      .update({ is_hidden: isHidden })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("[SUPABASE_SET_HIDDEN_ERROR]", error.message);
+      throw error;
+    }
+    return data;
+  },
+
+  async setStartupHiddenByHandle(handle: string, isHidden: boolean) {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("startups")
+      .update({ is_hidden: isHidden })
+      .ilike("handle", handle.trim())
+      .select();
+
+    if (error) {
+      console.error("[SUPABASE_SET_HIDDEN_HANDLE_ERROR]", error.message);
+      throw error;
     }
     return data;
   },
