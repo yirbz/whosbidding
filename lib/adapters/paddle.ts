@@ -37,6 +37,7 @@ export async function createPaddleTransaction(params: {
             name: "WhosBidding Real-Time Data Index & Benchmark Verification",
             taxCategory: "standard",
           },
+          taxMode: "internal",
           quantity: {
             minimum: 1,
             maximum: 1,

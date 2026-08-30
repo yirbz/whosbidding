@@ -19,10 +19,15 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "WhosBidding — The Leaderboard for Bidding Platforms",
-    description: "Bidding platforms bidding against bidding platforms. The ultimate leaderboard.",
+    description: "The leaderboard where bidding platforms bid against each other. Outbid the competition. Claim #1.",
     url: "https://whosbidding.lol",
     siteName: "WhosBidding",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WhosBidding — The Leaderboard for Bidding Platforms",
+    description: "The leaderboard where bidding platforms bid against each other. Outbid the competition. Claim #1.",
   },
 };
 
